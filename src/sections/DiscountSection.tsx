@@ -27,29 +27,32 @@ export default function DiscountSection(): JSX.Element {
 
   return (
     <div className="flex flex-col gap-3">
-      <RadioComponent
-        options={Radio_Options}
-        label={"Discount Type"}
-        handleChange={(e) => {
-          setDiscountType(e.target.value);
-        }}
-      />
-      <TextComponent
-        label={"Discount"}
-        name={"discountInfo.discount"}
-        type={"text"}
-        handleChange={(e) => {
-          setDiscount(+e.target.value);
-        }}
-      />
-      <p>
-        Payable Amount :{" "}
-        {discount > 0 && discount <= finalAmount
-          ? discountType === "amount"
-            ? finalAmount - discount
-            : finalAmount - (finalAmount * discount) / 100
-          : finalAmount}
-      </p>
+      <h2 className="text-xl font-semibold">Discount Information</h2>
+      <div className="flex flex-col gap-3">
+        <RadioComponent
+          options={Radio_Options}
+          label={"Discount Type"}
+          handleChange={(e) => {
+            setDiscountType(e.target.value);
+          }}
+        />
+        <TextComponent
+          label={"Discount"}
+          name={"discountInfo.discount"}
+          type={"text"}
+          handleChange={(e) => {
+            setDiscount(+e.target.value);
+          }}
+        />
+        <p>
+          Payable Amount :{" "}
+          {discount > 0 && discount <= finalAmount
+            ? discountType === "amount"
+              ? finalAmount - discount
+              : finalAmount - (finalAmount * discount) / 100
+            : finalAmount}
+        </p>
+      </div>
     </div>
   );
 }

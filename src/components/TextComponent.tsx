@@ -29,6 +29,7 @@ export default function TextComponent({
         {...register(name)}
         onChange={handleChange}
         disabled={isDisabled}
+        className="border py-2 px-2 w-48 rounded-md focus:border-blue-500 focus:outline-none"
       />
       <span>{errors.name && (errors.name?.message as string)}</span>
     </div>

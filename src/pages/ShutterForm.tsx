@@ -5,6 +5,7 @@ import ShutterSection from "@/sections/ShutterSection";
 import BasicInfoSection from "@/sections/BasicInfoSection";
 import DiscountSection from "@/sections/DiscountSection";
 import { useFormContext } from "@/contexts/FormContext";
+import ButtonComponent from "@/components/ButtonComponent";
 
 export default function ShutterForm() {
   const { handleSubmit } = useFormContext();
@@ -13,18 +14,19 @@ export default function ShutterForm() {
 
   return (
     <div id="shutterForm" className="w-full">
-      <div id="basicInfo">
-        <form onSubmit={handleSubmit(onSubmit)} className="flex gap-3 flex-col">
-          <div>
-            <BasicInfoSection />
-          </div>
-          <div>
-            <ShutterSection />
-          </div>
-          <div>
-            <DiscountSection />
-          </div>
-          <button type="submit">Proceed</button>
+      <div id="basicInfo" className="flex justify-center ">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex gap-10 flex-col border p-5 shadow-lg rounded-md"
+        >
+          <BasicInfoSection />
+          <ShutterSection />
+          <DiscountSection />
+          <ButtonComponent
+            type="submit"
+            label={"Proceed"}
+            customClass={"mb-1 text-green-500 border-green-500"}
+          />
         </form>
       </div>
     </div>

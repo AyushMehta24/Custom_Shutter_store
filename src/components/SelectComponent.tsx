@@ -17,7 +17,11 @@ export default function SelectComponent({
   return (
     <div className="flex flex-col gap-1">
       <label htmlFor={name}>{label}</label>
-      <select {...register(name)}>
+      <select
+        {...register(name)}
+        className="border py-2 px-2 w-48 rounded-md focus:border-blue-500 focus:outline-none bg-white"
+      >
+        <option value={""}>{"Select Shutter"}</option>
         {options.map((option: string): JSX.Element => {
           return (
             <option key={option} value={option}>

@@ -1,5 +1,6 @@
 "use client";
 
+import ButtonComponent from "@/components/ButtonComponent";
 import SelectComponent from "@/components/SelectComponent";
 import TextComponent from "@/components/TextComponent";
 import { AmountContext } from "@/contexts/AmountContext";
@@ -40,7 +41,7 @@ export default function ShutterRow({
   }, [area, index, setValue]);
 
   return (
-    <div key={index} className="flex gap-3">
+    <div key={index} className="flex gap-3  items-end">
       <SelectComponent
         name={`shutter.${index}.shutterName`}
         label={"Shutter Name"}
@@ -58,18 +59,25 @@ export default function ShutterRow({
         label="Height"
         handleChange={(e) => setHeight(+e.target.value)}
       />
-      <label htmlFor={`shutter.${index}.area`}>Area</label>
-      <input
-        {...register(`shutter.${index}.area`)}
-        disabled={true}
-        value={area}
+      <div className="flex flex-col gap-1">
+        <label htmlFor={`shutter.${index}.area`}>Area</label>
+        <input
+          {...register(`shutter.${index}.area`)}
+          disabled={true}
+          value={area}
+          className="border py-2 px-2 w-48 rounded-md focus:border-blue-500 focus:outline-none"
+        />
+      </div>
+      <ButtonComponent
+        handleClick={() => handleRemoveShutter(index)}
+        label={"Remove"}
+        customClass={"mb-1 text-red-500 border-red-500"}
       />
-      <button type="button" onClick={() => handleRemoveShutter(index)}>
-        Remove
-      </button>
-      <button type="button" onClick={() => handleCloneShutter(index)}>
-        Clone
-      </button>
+      <ButtonComponent
+        handleClick={() => handleCloneShutter(index)}
+        label={"Clone"}
+        customClass={"mb-1 text-blue-500 border-blue-500 "}
+      />
     </div>
   );
 }

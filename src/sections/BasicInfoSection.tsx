@@ -22,19 +22,24 @@ const BasciInfoFields: BasicFieldsT[] = [
   },
 ];
 
-export default function BasicInfoSection():JSX.Element {
+export default function BasicInfoSection(): JSX.Element {
   return (
-    <div>
-      {BasciInfoFields.map((field: BasicFieldsT):JSX.Element => {
-        return (
-          <TextComponent
-            key={field.name}
-            label={field.label}
-            name={field.name}
-            type={field.type}
-          />
-        );
-      })}
+    <div className="">
+      <h2 className="text-xl font-semibold" >
+        Basic Information
+      </h2>
+      <div className="flex gap-5">
+        {BasciInfoFields.map((field: BasicFieldsT): JSX.Element => {
+          return (
+            <TextComponent
+              key={field.name}
+              label={field.label}
+              name={field.name}
+              type={field.type}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

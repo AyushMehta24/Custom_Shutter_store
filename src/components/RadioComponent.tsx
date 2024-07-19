@@ -22,18 +22,18 @@ export default function RadioComponent({
   return (
     <div className="flex gap-5 items-center">
       <label>{label}</label>
-      {options.map((option: OptionT) => {
+      {options.map((option: OptionT, index: number) => {
         return (
-          <>
+          <div key={index} className="flex gap-2">
             <input
               type="radio"
-              id={option.name}
+              id={option.name + index}
               {...register(option.name)}
               value={option.value}
               onChange={handleChange}
             />
-            <label htmlFor={option.name}>{option.label}</label>
-          </>
+            <label htmlFor={option.name + index}>{option.label}</label>
+          </div>
         );
       })}
     </div>

@@ -5,14 +5,12 @@ import { useFieldArray } from "react-hook-form";
 import { useFormContext } from "@/contexts/FormContext";
 import { AmountContext } from "@/contexts/AmountContext";
 import ShutterRow from "./ShutterRow";
-
+import ButtonComponent from "@/components/ButtonComponent";
 
 export default function ShutterSection(): JSX.Element {
   const { control, watch, getValues } = useFormContext();
 
-  const { finalAmount, setFinalAmount } = useContext(
-    AmountContext
-  ) as {
+  const { finalAmount, setFinalAmount } = useContext(AmountContext) as {
     finalAmount: number;
     setFinalAmount: React.Dispatch<React.SetStateAction<number>>;
   };
@@ -30,7 +28,7 @@ export default function ShutterSection(): JSX.Element {
   const shutterList = watch("shutter");
 
   useEffect(() => {
-    let total = 0;
+    let total: number = 0;
     shutterList &&
       shutterList.map((shutter: any) => {
         total += shutter.area;
@@ -61,22 +59,27 @@ export default function ShutterSection(): JSX.Element {
 
   return (
     <div className="flex flex-col gap-3">
-      {shutterFields.map((_, index): JSX.Element => {
-        return (
-          <ShutterRow
-            key={index}
-            index={index}
-            handleRemoveShutter={handleRemoveShutter}
-            handleCloneShutter={handleCloneShutter}
-          />
-        );
-      })}
+      <h2 className="text-xl font-semibold">Shutter Information</h2>
       <div className="flex flex-col gap-3">
-        <button type="button" onClick={handleAddShutter} >
-          Add Shutter
-        </button>
+        {shutterFields.map((_, index): JSX.Element => {
+          return (
+            <ShutterRow
+              key={index}
+              index={index}
+              handleRemoveShutter={handleRemoveShutter}
+              handleCloneShutter={handleCloneShutter}
+            />
+          );
+        })}
+        <div className="flex flex-col gap-3">
+          <ButtonComponent
+            handleClick={() => handleAddShutter()}
+            label={"Add Shutter"}
+            customClass={" w-36 text-blue-500 border-blue-500"}
+          />
 
-        <p className="mt-3">Total Amount : {finalAmount}</p>
+          <p className="mt-3">Total Amount : {finalAmount}</p>
+        </div>
       </div>
     </div>
   );

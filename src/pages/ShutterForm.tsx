@@ -8,13 +8,40 @@ import { useFormContext } from "@/contexts/FormContext";
 import ButtonComponent from "@/components/ButtonComponent";
 import { useState } from "react";
 import AddCustomer from "@/sections/AddCustomer";
+import { useDispatch } from "react-redux";
+import { setFormData } from "@/store/formSlice";
 
 export default function ShutterForm() {
   const { handleSubmit } = useFormContext();
   const [isModal, setIsModal] = useState(false);
 
-  const onSubmit = (data: FieldValues) => console.log(data);
+  const dispatch = useDispatch();
 
+
+  const onSubmit = (data: FieldValues) => {
+    const shutterData = data.shutter.map((shutter: any) => ({
+      shutterName: shutter.shutterName,
+      width: shutter.width,
+      height: shutter.height,
+      area: Number(shutter.width) * Number(shutter.height),
+    }));
+
+    const formData = {
+      discountInfo: {
+        discountType: data.discountInfo.discountType,
+        discount: data.discountInfo.discount,
+      },
+      basicInfo: {
+        staffName: data.basicInfo.staffName,
+        customerName: data.basicInfo.customerName,
+        date: data.basicInfo.date,
+      },
+      shutter: shutterData,
+    };
+
+    dispatch(setFormData(formData));
+    console.log("Form Data Submitted:", formData);
+  };
   return (
     <div id="shutterForm" className="w-full ">
       <div id="basicInfo" className="flex justify-center h-full">

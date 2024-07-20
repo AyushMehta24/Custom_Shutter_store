@@ -24,7 +24,27 @@ interface FormData {
   shutter: Shutter[];
 }
 
-const initialState: FormData[] = []; // Changed to an array
+const initialState: FormData[] = [
+  {
+    basicInfo: {
+      staffName: "ayush",
+      customerName: "Ayush",
+      date: "2024-07-07",
+    },
+    shutter: [
+      {
+        shutterName: "A",
+        width: "20",
+        height: "30",
+        area: 600,
+      },
+    ],
+    discountInfo: {
+      discountType: "amount",
+      discount: "0",
+    },
+  },
+];
 
 const formSlice = createSlice({
   name: "form",
@@ -34,7 +54,7 @@ const formSlice = createSlice({
       state.push(action.payload);
     },
     deleteFormData: (state, action: PayloadAction<number>) => {
-      state.splice(action.payload, 1); 
+      state.splice(action.payload, 1);
     },
     editFormData: (
       state,

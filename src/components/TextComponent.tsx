@@ -2,7 +2,6 @@ import { FormType } from "@/types/basicInfoTypes";
 import React, { ChangeEventHandler } from "react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import _ from "lodash"
-// import { FormErrors } from "./types"; // Import the type
 
 export type FormErrors = {
   [key: string]: {
@@ -30,7 +29,6 @@ export default function TextComponent({
   errors: FieldErrors<any>;
 }) {
 
-  console.log(errors["basicInfo.staffName"] , "text");
 
   const formErrors = errors as FormErrors;
 

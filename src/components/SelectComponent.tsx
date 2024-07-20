@@ -19,7 +19,6 @@ export default function SelectComponent({
   register,
   errors,
 }: SelectComponentProps) {
-  console.log(errors, "select");
   const formErrors = errors as FormErrors;
 
   return (

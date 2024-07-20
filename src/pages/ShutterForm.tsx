@@ -1,32 +1,68 @@
 "use client";
 
-import {
-  FieldValues,
-  SubmitHandler,
-  useForm,
-  useFormContext,
-} from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import ShutterSection from "@/sections/ShutterSection";
 import BasicInfoSection from "@/sections/BasicInfoSection";
 import DiscountSection from "@/sections/DiscountSection";
 import ButtonComponent from "@/components/ButtonComponent";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import AddCustomer from "@/sections/AddCustomer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addFormData } from "@/store/formSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "@/validators/shutterFormSchema";
 import { FormType } from "@/types/basicInfoTypes";
+import { AmountContext } from "@/contexts/AmountContext";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { RootState } from "@/store/store";
 
 export default function ShutterForm() {
+  const { finalAmount } = useContext(AmountContext) as {
+    finalAmount: number;
+  };
   const {
     formState: { errors },
     handleSubmit,
     register,
     watch,
     setValue,
-    control
-  } = useForm<FormType>({ resolver: yupResolver(validationSchema) });
+    control,
+    reset,
+  } = useForm<FormType>({
+    resolver: yupResolver(validationSchema),
+    context: {
+      finalAmount: finalAmount,
+    },
+  });
+
+  const params = useSearchParams();
+  const id = params?.get("id");
+
+  const orderDetails = useSelector(
+    (state: RootState) => state.form[(id && +id) || 0]
+  );
+  console.log(orderDetails);
+
+  useEffect(() => {
+    if (id) {
+      reset({
+        basicInfo: {
+          staffName: orderDetails.basicInfo.staffName,
+          customerName: orderDetails.basicInfo.customerName,
+          date: new Date(orderDetails.basicInfo.date),
+        },
+        shutter: orderDetails.shutter,
+        discountInfo: {
+          discountType: orderDetails.discountInfo.discountType,
+          discount: +orderDetails.discountInfo.discount,
+        },
+      });
+    }
+
+    // if (defaultValues.basicInfo) {
+    //   reset(defaultValues.basicInfo);
+    // }
+  }, [id, reset]);
 
   const [isModal, setIsModal] = useState(false);
 
@@ -54,8 +90,12 @@ export default function ShutterForm() {
     };
 
     dispatch(addFormData(formData));
-    console.log("Form Data Submitted:", formData);
   };
+
+  const route = useRouter();
+  function handleNavigate() {
+    route.push("/list");
+  }
   return (
     <div id="shutterForm" className="w-full ">
       <div id="basicInfo" className="flex justify-center h-full">
@@ -80,6 +120,7 @@ export default function ShutterForm() {
             type="submit"
             label={"Proceed"}
             customClass={"mb-1 text-green-500 border-green-500"}
+            handleClick={() => handleNavigate()}
           />
         </form>
         {isModal && <AddCustomer setIsModal={setIsModal} />}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store"; // Adjust this import based on your store setup
 import { deleteFormData } from "@/store/formSlice"; // Adjust import based on your structure
+import Link from "next/link";
 
 const OrderListPage: React.FC = () => {
   const formDataArray = useSelector((state: RootState) => state.form);
@@ -54,9 +55,11 @@ const OrderListPage: React.FC = () => {
                   <td className="py-2 px-4 border-b">{discountAmount}</td>
                   <td className="py-2 px-4 border-b">{payablePrice}</td>
                   <td className="py-2 px-4 border-b flex gap-2">
-                    <button className="bg-blue-500 text-white py-1 px-3 rounded">
-                      Edit
-                    </button>
+                    <Link href={`/?id=${index}`}>
+                      <button className="bg-blue-500 text-white py-1 px-3 rounded">
+                        Edit
+                      </button>
+                    </Link>
                     <button
                       className="bg-red-500 text-white py-1 px-3 rounded"
                       onClick={() => handleDelete(index)}

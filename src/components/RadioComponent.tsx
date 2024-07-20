@@ -37,7 +37,6 @@ export default function RadioComponent({
 }) {
   const formErrors = errors as FormErrors;
 
-  console.log(errors , "radio");
 
   return (
     <div className="flex gap-5 items-center">

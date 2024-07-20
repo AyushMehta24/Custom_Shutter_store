@@ -1,6 +1,5 @@
 import * as yup from "yup";
 
-// Define the schema
 const validationSchema = yup.object({
   basicInfo: yup.object({
     staffName: yup
@@ -35,7 +34,7 @@ const validationSchema = yup.object({
       .test(
         "is-valid-amount",
         "Discount cannot be greater than the final amount",
-        function (value) {
+        function (value:number):boolean {
           if (this.parent.discountType === "amount") {
             return value <= this.options?.context?.finalAmount;
           }
@@ -45,7 +44,7 @@ const validationSchema = yup.object({
       .test(
         "is-valid-percentage",
         "Discount must be between 0 and 100.",
-        function (value) {
+        function (value:number):boolean {
           if (this.parent.discountType === "percentage") {
             return value >= 0 && value <= 100;
           }

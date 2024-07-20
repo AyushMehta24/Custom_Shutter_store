@@ -1,4 +1,3 @@
-// // store/index.ts
 import { configureStore } from "@reduxjs/toolkit";
 import customerReducer from "./customerSlice";
 import formReducer from "./formSlice";

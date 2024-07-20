@@ -1,5 +1,12 @@
 import { useFormContext } from "@/contexts/FormContext";
 import React, { ChangeEventHandler } from "react";
+// import { FormErrors } from "./types"; // Import the type
+
+export type FormErrors = {
+  [key: string]: {
+    message?: string;
+  };
+};
 
 export default function TextComponent({
   label,
@@ -20,6 +27,11 @@ export default function TextComponent({
     register,
     formState: { errors },
   } = useFormContext();
+  console.log(errors);
+
+  // Cast errors to your specific type
+  const formErrors = errors as FormErrors;
+
   return (
     <div className="flex flex-col gap-1">
       <label htmlFor={name}>{label}</label>
@@ -29,9 +41,13 @@ export default function TextComponent({
         {...register(name)}
         onChange={handleChange}
         disabled={isDisabled}
-        className="border py-2 px-2 w-48 rounded-md focus:border-blue-500 focus:outline-none"
+        className="border p-2 w-48 rounded-md focus:border-blue-500 focus:outline-none"
       />
-      <span>{errors.name && (errors.name?.message as string)}</span>
+      {formErrors[name] && (
+        <span className="text-red-500">
+          {formErrors[name]?.message as string}
+        </span>
+      )}
     </div>
   );
 }

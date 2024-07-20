@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import ButtonComponent from "./ButtonComponent";
+
 export default function ModalComponent({
   children,
   setIsModal,
@@ -8,19 +9,23 @@ export default function ModalComponent({
   setIsModal: Dispatch<SetStateAction<boolean>>;
 }) {
   return (
-    <div className="flex justify-center z-50 ">
-      <div className=" fixed z-50 justify-center items-center md:inset-0">
-        <div className="relative p-4 max-w-sm justify-center flex ">
-          <div className=" relative bg-slate-100 rounded-lg shadow">
-            <div className="flex justify-end">
-              <ButtonComponent
-                label="Cancel"
-                customClass="border border-red-500 text-red-500 m-2"
-                handleClick={() => setIsModal(false)}
-              />
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="relative p-4 max-w-sm w-full">
+        <div className="bg-slate-100 rounded-lg shadow">
+          <div className="flex justify-end">
+            <div className="bg-red 100 mr-auto w-full grid grid-cols-2 ">
+              <p className="flex justify-center items-center">New Customer</p>
+              <div className="flex justify-end">
+                <ButtonComponent
+                  label="X"
+                  customClass="border-2 border-slate-300 hover:bg-red-500 hover:border-red-500 hover:text-white m-2 mr-3 w-12 font-semibold"
+                  handleClick={() => setIsModal(false)}
+                />
+              </div>
             </div>
-              {children}
           </div>
+            <div className="border border-grey-200"></div>
+          {children}
         </div>
       </div>
     </div>

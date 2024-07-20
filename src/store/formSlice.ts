@@ -15,7 +15,7 @@ interface DiscountInfo {
 interface BasicInfo {
   staffName: string;
   customerName: string;
-  date: string;
+  date: Date;
 }
 
 interface FormData {
@@ -24,21 +24,27 @@ interface FormData {
   shutter: Shutter[];
 }
 
-const initialState: FormData = {
-  discountInfo: { discountType: "", discount: "" },
-  basicInfo: { staffName: "", customerName: "", date: "" },
-  shutter: [],
-};
+const initialState: FormData[] = []; // Changed to an array
 
 const formSlice = createSlice({
   name: "form",
   initialState,
   reducers: {
-    setFormData: (state, action: PayloadAction<FormData>) => {
-      return { ...action.payload };
+    addFormData: (state, action: PayloadAction<FormData>) => {
+      console.log(action , action);
+      state.push(action.payload);
+    },
+    deleteFormData: (state, action: PayloadAction<number>) => {
+      state.splice(action.payload, 1); 
+    },
+    editFormData: (
+      state,
+      action: PayloadAction<{ index: number; data: FormData }>
+    ) => {
+      state[action.payload.index] = action.payload.data; // Update form data at the specified index
     },
   },
 });
 
-export const { setFormData } = formSlice.actions;
+export const { addFormData, deleteFormData, editFormData } = formSlice.actions;
 export default formSlice.reducer;

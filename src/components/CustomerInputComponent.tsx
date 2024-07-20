@@ -7,7 +7,8 @@ export default function CustomerInput({
   handleChange,
   isDisabled = false,
   register,
-  errors
+  errors,
+  customClass = "",
 }: {
   label: string;
   name: string;
@@ -16,10 +17,10 @@ export default function CustomerInput({
     | ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
     | undefined;
   isDisabled?: boolean;
-  register:any
-  errors:any
+  register: any;
+  errors: any;
+  customClass?: string;
 }) {
-
   return (
     <div className="flex flex-col gap-1">
       <label htmlFor={name}>{label}</label>
@@ -29,7 +30,7 @@ export default function CustomerInput({
         {...register(name)}
         onChange={handleChange}
         disabled={isDisabled}
-        className="border py-2 px-2 w-48 rounded-md focus:border-blue-500 focus:outline-none"
+        className={`border py-2 px-2 w-48 rounded-md focus:border-blue-500 focus:outline-none ${customClass}`}
       />
       <span>{errors.name && (errors.name?.message as string)}</span>
     </div>

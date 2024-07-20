@@ -1,6 +1,8 @@
-
 import React, { createContext, useContext, ReactNode } from "react";
 import { useForm, FieldValues, UseFormReturn } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import validationSchema from "@/validators/shutterFormSchema";
+import { AmountContext } from "./AmountContext";
 
 interface FormContextType extends UseFormReturn<FieldValues> {}
 
@@ -19,10 +21,16 @@ interface FormProviderProps {
 }
 
 export const FormProvider = ({ children }: FormProviderProps) => {
+  const { finalAmount } = useContext(AmountContext) as {
+    finalAmount: number;
+  };
   const methods = useForm<FieldValues>({
+    resolver: yupResolver(validationSchema) as any,
+    context: { finalAmount: finalAmount },
     defaultValues: {
       discountInfo: {
         discountType: "amount",
+        discount: 0,
       },
     },
   });

@@ -1,3 +1,5 @@
+"use client";
+
 import ButtonComponent from "@/components/ButtonComponent";
 import CustomerInput from "@/components/CustomerInputComponent";
 import ModalComponent from "@/components/ModalComponent";
@@ -35,7 +37,7 @@ export default function AddCustomer({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<customerT>();
   const dispatch = useDispatch();
 
   const onSubmit = (data: customerT) => {
@@ -56,6 +58,7 @@ export default function AddCustomer({
                 type={field.type}
                 register={register}
                 errors={errors}
+                customClass="w-full"
               />
             );
           })}
@@ -64,7 +67,7 @@ export default function AddCustomer({
           <ButtonComponent
             type="submit"
             label={"Proceed"}
-            customClass={"mb-1 text-green-500 border-green-500"}
+            customClass={"mb-3 mr-1 text-green-500 border-green-500"}
           />
         </div>
       </form>

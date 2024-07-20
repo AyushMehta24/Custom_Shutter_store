@@ -10,11 +10,11 @@ export default function page(): JSX.Element {
   return (
     <div className="w-full p-5">
       <Provider store={store}>
-        <FormProvider>
-          <AmountProvider>
+        <AmountProvider>
+          <FormProvider>
             <ShutterForm />
-          </AmountProvider>
-        </FormProvider>
+          </FormProvider>
+        </AmountProvider>
       </Provider>
     </div>
   );

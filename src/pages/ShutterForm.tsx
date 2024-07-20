@@ -9,14 +9,13 @@ import ButtonComponent from "@/components/ButtonComponent";
 import { useState } from "react";
 import AddCustomer from "@/sections/AddCustomer";
 import { useDispatch } from "react-redux";
-import { setFormData } from "@/store/formSlice";
+import { addFormData } from "@/store/formSlice";
 
 export default function ShutterForm() {
   const { handleSubmit } = useFormContext();
   const [isModal, setIsModal] = useState(false);
 
   const dispatch = useDispatch();
-
 
   const onSubmit = (data: FieldValues) => {
     const shutterData = data.shutter.map((shutter: any) => ({
@@ -34,12 +33,12 @@ export default function ShutterForm() {
       basicInfo: {
         staffName: data.basicInfo.staffName,
         customerName: data.basicInfo.customerName,
-        date: data.basicInfo.date,
+        date: data.basicInfo.date.toISOString().split('T')[0],
       },
       shutter: shutterData,
     };
 
-    dispatch(setFormData(formData));
+    dispatch(addFormData(formData));
     console.log("Form Data Submitted:", formData);
   };
   return (

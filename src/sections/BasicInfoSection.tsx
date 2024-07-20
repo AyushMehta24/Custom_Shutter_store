@@ -1,6 +1,5 @@
 "use client";
 
-
 import TextComponent from "@/components/TextComponent";
 import { BasicFieldsT } from "@/types/basicInfoTypes";
 import React, { Dispatch, SetStateAction, useState } from "react";
@@ -42,9 +41,7 @@ export default function BasicInfoSection({
   });
   return (
     <div className="">
-      <h2 className="text-xl font-semibold" >
-        Basic Information
-      </h2>
+      <h2 className="text-xl font-semibold">Basic Information</h2>
       <div className=" flex gap-5">
         {BasciInfoFields.map((field) => {
           if (field.type === "select") {
@@ -67,11 +64,13 @@ export default function BasicInfoSection({
             );
           }
         })}
-        <ButtonComponent
-          handleClick={() => setIsModal(true)}
-          label={"Add New Customer"}
-          customClass={" w-36 text-blue-500 border-blue-500"}
-        />
+        <div className="flex items-end">
+          <ButtonComponent
+            handleClick={() => setIsModal(true)}
+            label={"Add New Customer"}
+            customClass={" w-40 text-blue-500 border-blue-500 py-2"}
+          />
+        </div>
       </div>
     </div>
   );

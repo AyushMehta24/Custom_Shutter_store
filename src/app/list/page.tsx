@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import FormDataListPage from "@/pages/FormListData";
 import React from "react";
 import store from "@/store/store";
 import { Provider } from "react-redux";
+import OrdersList from "@/pages/OrdersList";
 
 export default function page() {
   return (
     <div>
       <Provider store={store}>
-        <FormDataListPage />
+        <OrdersList />
       </Provider>
     </div>
   );

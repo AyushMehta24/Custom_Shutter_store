@@ -2,6 +2,7 @@ export type Inputs = {
     basicInfo: {
       staffName: string;
       customerName: string;
+      date:Date
     };
     shutterInfo:{
       shutterType: string;

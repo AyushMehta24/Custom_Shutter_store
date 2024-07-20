@@ -1,9 +1,11 @@
-import { useCustomFormContext } from "@/contexts/FormContext";
+import { FormType } from "@/types/basicInfoTypes";
 import React, { ChangeEventHandler } from "react";
-// import { FormErrors } from "./types"; // Import your error types
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import _ from "lodash"
+
 
 type OptionT = {
-  name: string;
+  name: any;
   label: string;
   value: string;
 };
@@ -22,20 +24,20 @@ export default function RadioComponent({
   options,
   label,
   handleChange,
+  register,
+  errors,
 }: {
   options: OptionT[];
   label: string;
   handleChange?:
     | ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
     | undefined;
+  register: UseFormRegister<FormType>;
+  errors: FieldErrors<any>;
 }) {
-  const {
-    register,
-    formState: { errors },
-  } = useCustomFormContext();
-
-  // Cast errors to your specific type
   const formErrors = errors as FormErrors;
+
+  console.log(errors , "radio");
 
   return (
     <div className="flex gap-5 items-center">

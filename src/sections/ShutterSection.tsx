@@ -1,15 +1,32 @@
 "use client";
 
 import React, { useContext, useEffect } from "react";
-import { useFieldArray } from "react-hook-form";
-import { useCustomFormContext } from "@/contexts/FormContext";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+  useFieldArray,
+} from "react-hook-form";
 import { AmountContext } from "@/contexts/AmountContext";
 import ShutterRow from "./ShutterRow";
 import ButtonComponent from "@/components/ButtonComponent";
+import { FormType } from "@/types/basicInfoTypes";
 
-export default function ShutterSection(): JSX.Element {
-  const { control, watch, getValues } = useCustomFormContext();
-
+export default function ShutterSection({
+  register,
+  errors,
+  watch,
+  setValue,
+  control,
+}: {
+  register: UseFormRegister<FormType>;
+  errors: FieldErrors<FormType>;
+  watch: UseFormWatch<FormType>;
+  setValue: UseFormSetValue<FormType>;
+  control: Control<FormType, any>;
+}): JSX.Element {
   const { finalAmount, setFinalAmount } = useContext(AmountContext) as {
     finalAmount: number;
     setFinalAmount: React.Dispatch<React.SetStateAction<number>>;
@@ -41,6 +58,7 @@ export default function ShutterSection(): JSX.Element {
       shutterName: "",
       width: "",
       height: "",
+      area: 0,
     });
   };
 
@@ -64,6 +82,10 @@ export default function ShutterSection(): JSX.Element {
         {shutterFields.map((_, index): JSX.Element => {
           return (
             <ShutterRow
+              watch={watch}
+              setValue={setValue}
+              register={register}
+              errors={errors}
               key={index}
               index={index}
               handleRemoveShutter={handleRemoveShutter}

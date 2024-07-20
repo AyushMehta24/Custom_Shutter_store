@@ -31,7 +31,6 @@ const formSlice = createSlice({
   initialState,
   reducers: {
     addFormData: (state, action: PayloadAction<FormData>) => {
-      console.log(action , action);
       state.push(action.payload);
     },
     deleteFormData: (state, action: PayloadAction<number>) => {

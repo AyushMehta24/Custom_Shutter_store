@@ -1,28 +1,33 @@
-import { useCustomFormContext } from "@/contexts/FormContext";
+import { FormType } from "@/types/basicInfoTypes";
 import React from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import _ from "lodash";
+import { FormErrors } from "./TextComponent";
 
 interface SelectComponentProps {
-  name: string;
+  name: any;
   label: string;
   options: string[];
+  register: UseFormRegister<FormType>;
+  errors: FieldErrors<any>;
 }
 
 export default function SelectComponent({
   name,
   label,
   options,
+  register,
+  errors,
 }: SelectComponentProps) {
-  const {
-    register,
-    formState: { errors },
-  } = useCustomFormContext();
+  console.log(errors, "select");
+  const formErrors = errors as FormErrors;
 
   return (
     <div className="flex flex-col gap-1">
       <label htmlFor={name}>{label}</label>
       <select
         id={name}
-        {...register(name, { required: `${label} is required` })} 
+        {...register(name, { required: `${label} is required` })}
         className={`border py-2 px-2 w-50 rounded-md focus:border-blue-500 focus:outline-none bg-white ${
           errors[name] ? "border-red-500" : "border-gray-300"
         }`}
@@ -36,11 +41,9 @@ export default function SelectComponent({
           </option>
         ))}
       </select>
-      {errors[name] && (
-        <span className="text-red-500 text-sm">
-          {errors[name]?.message as string}
-        </span>
-      )}
+      <span className="text-red-500">
+        {_.get(formErrors, `${name}.message`) as string}
+      </span>
     </div>
   );
 }

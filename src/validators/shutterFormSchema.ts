@@ -6,7 +6,7 @@ const validationSchema = yup.object({
     staffName: yup
       .string()
       .trim()
-      .required("Staff Name is required and cannot be only spaces."),
+      .required("Staff Name is required."),
     customerName: yup.string().trim().required("Customer Name is required."),
     date: yup.date().required("Date is required."),
   }),
@@ -16,24 +16,18 @@ const validationSchema = yup.object({
       yup.object({
         shutterName: yup.string().required("Shutter Name is required."),
         width: yup
-          .number()
-          .positive("Width must be a positive number.")
+          .string()
           .required("Width is required."),
         height: yup
-          .number()
-          .positive("Height must be a positive number.")
+          .string()
           .required("Height is required."),
-        area: yup.number().positive("Area must be a positive number."),
+        area: yup.number().positive("Area must be a positive.").required(),
       })
     )
-    .min(1, "At least one row in Shutter Section is required."),
+    .min(1, "At least one row is required.").required(),
   discountInfo: yup.object({
     discountType: yup
       .string()
-      .oneOf(
-        ["amount", "percentage"],
-        "Discount Type must be either 'amount' or 'percentage'"
-      )
       .required("Discount Type is required."),
     discount: yup
       .number()

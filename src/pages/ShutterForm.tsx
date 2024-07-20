@@ -1,28 +1,38 @@
 "use client";
 
-import { FieldValues } from "react-hook-form";
+import {
+  FieldValues,
+  SubmitHandler,
+  useForm,
+  useFormContext,
+} from "react-hook-form";
 import ShutterSection from "@/sections/ShutterSection";
 import BasicInfoSection from "@/sections/BasicInfoSection";
 import DiscountSection from "@/sections/DiscountSection";
-import { useCustomFormContext } from "@/contexts/FormContext";
 import ButtonComponent from "@/components/ButtonComponent";
 import { useState } from "react";
 import AddCustomer from "@/sections/AddCustomer";
 import { useDispatch } from "react-redux";
 import { addFormData } from "@/store/formSlice";
+import { yupResolver } from "@hookform/resolvers/yup";
+import validationSchema from "@/validators/shutterFormSchema";
+import { FormType } from "@/types/basicInfoTypes";
 
 export default function ShutterForm() {
   const {
-    handleSubmit,
     formState: { errors },
-  } = useCustomFormContext();
+    handleSubmit,
+    register,
+    watch,
+    setValue,
+    control
+  } = useForm<FormType>({ resolver: yupResolver(validationSchema) });
 
   const [isModal, setIsModal] = useState(false);
 
   const dispatch = useDispatch();
 
-  const onSubmit = (data: FieldValues) => {
-    console.log(errors , "error");
+  const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
     const shutterData = data.shutter.map((shutter: any) => ({
       shutterName: shutter.shutterName,
       width: shutter.width,
@@ -53,9 +63,19 @@ export default function ShutterForm() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex gap-10 flex-col border p-5 shadow-lg rounded-md"
         >
-          <BasicInfoSection setIsModal={setIsModal} />
-          <ShutterSection />
-          <DiscountSection />
+          <BasicInfoSection
+            setIsModal={setIsModal}
+            register={register}
+            errors={errors}
+          />
+          <ShutterSection
+            register={register}
+            errors={errors}
+            watch={watch}
+            setValue={setValue}
+            control={control}
+          />
+          <DiscountSection register={register} errors={errors} />
           <ButtonComponent
             type="submit"
             label={"Proceed"}

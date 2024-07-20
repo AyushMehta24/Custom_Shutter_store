@@ -1,5 +1,7 @@
-import { useCustomFormContext } from "@/contexts/FormContext";
+import { FormType } from "@/types/basicInfoTypes";
 import React, { ChangeEventHandler } from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
+import _ from "lodash"
 // import { FormErrors } from "./types"; // Import the type
 
 export type FormErrors = {
@@ -14,23 +16,24 @@ export default function TextComponent({
   type,
   handleChange,
   isDisabled = false,
+  register,
+  errors
 }: {
   label: string;
-  name: string;
+  name: any;
   type: string;
   handleChange?:
     | ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
     | undefined;
   isDisabled?: boolean;
+  register: UseFormRegister<FormType>;
+  errors: FieldErrors<any>;
 }) {
-  const {
-    register,
-    formState: { errors },
-  } = useCustomFormContext();
 
-  // Cast errors to your specific type
-  console.log(errors , "error");
+  console.log(errors["basicInfo.staffName"] , "text");
+
   const formErrors = errors as FormErrors;
+
 
   return (
     <div className="flex flex-col gap-1">
@@ -43,11 +46,9 @@ export default function TextComponent({
         disabled={isDisabled}
         className="border p-2 w-48 rounded-md focus:border-blue-500 focus:outline-none"
       />
-      {formErrors.name && (
         <span className="text-red-500">
-          {formErrors.name?.message as string}
+          {_.get(formErrors,`${name}.message`) as string }
         </span>
-      )}
     </div>
   );
 }

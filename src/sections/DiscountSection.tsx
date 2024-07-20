@@ -3,7 +3,9 @@
 import RadioComponent from "@/components/RadioComponent";
 import TextComponent from "@/components/TextComponent";
 import { AmountContext } from "@/contexts/AmountContext";
+import { FormType } from "@/types/basicInfoTypes";
 import React, { useContext, useState } from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 const Radio_Options: {
   name: string;
@@ -18,7 +20,13 @@ const Radio_Options: {
   },
 ];
 
-export default function DiscountSection(): JSX.Element {
+export default function DiscountSection({
+  register,
+  errors,
+}: {
+  register: UseFormRegister<FormType>;
+  errors: FieldErrors<FormType>;
+}): JSX.Element {
   const { finalAmount } = useContext(AmountContext) as {
     finalAmount: number;
   };
@@ -30,6 +38,8 @@ export default function DiscountSection(): JSX.Element {
       <h2 className="text-xl font-semibold">Discount Information</h2>
       <div className="flex flex-col gap-3">
         <RadioComponent
+          register={register}
+          errors={errors}
           options={Radio_Options}
           label={"Discount Type"}
           handleChange={(e) => {
@@ -37,6 +47,8 @@ export default function DiscountSection(): JSX.Element {
           }}
         />
         <TextComponent
+          register={register}
+          errors={errors}
           label={"Discount"}
           name={"discountInfo.discount"}
           type={"text"}

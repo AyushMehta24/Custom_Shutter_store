@@ -1,7 +1,7 @@
 "use client";
 
 import TextComponent from "@/components/TextComponent";
-import { BasicFieldsT } from "@/types/basicInfoTypes";
+import { BasicFieldsT, FormType } from "@/types/basicInfoTypes";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import AddCustomer from "./AddCustomer";
 import ButtonComponent from "@/components/ButtonComponent";
@@ -9,6 +9,7 @@ import SelectComponent from "@/components/SelectComponent";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 import { customerT } from "@/store/customerSlice";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 const BasciInfoFields: BasicFieldsT[] = [
   {
@@ -29,8 +30,12 @@ const BasciInfoFields: BasicFieldsT[] = [
 ];
 
 export default function BasicInfoSection({
+  register,
+  errors,
   setIsModal,
 }: {
+  register: UseFormRegister<FormType>;
+  errors: FieldErrors<FormType>;
   setIsModal: Dispatch<SetStateAction<boolean>>;
 }): JSX.Element {
   const customers: customerT[] = useSelector(
@@ -48,6 +53,8 @@ export default function BasicInfoSection({
           if (field.type === "select") {
             return (
               <SelectComponent
+                register={register}
+                errors={errors}
                 key={field.name}
                 label={field.label}
                 name={field.name}
@@ -57,6 +64,8 @@ export default function BasicInfoSection({
           } else {
             return (
               <TextComponent
+                register={register}
+                errors={errors}
                 key={field.name}
                 label={field.label}
                 name={field.name}

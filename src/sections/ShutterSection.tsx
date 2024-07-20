@@ -2,13 +2,13 @@
 
 import React, { useContext, useEffect } from "react";
 import { useFieldArray } from "react-hook-form";
-import { useFormContext } from "@/contexts/FormContext";
+import { useCustomFormContext } from "@/contexts/FormContext";
 import { AmountContext } from "@/contexts/AmountContext";
 import ShutterRow from "./ShutterRow";
 import ButtonComponent from "@/components/ButtonComponent";
 
 export default function ShutterSection(): JSX.Element {
-  const { control, watch, getValues } = useFormContext();
+  const { control, watch, getValues } = useCustomFormContext();
 
   const { finalAmount, setFinalAmount } = useContext(AmountContext) as {
     finalAmount: number;

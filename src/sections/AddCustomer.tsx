@@ -3,11 +3,10 @@
 import ButtonComponent from "@/components/ButtonComponent";
 import CustomerInput from "@/components/CustomerInputComponent";
 import ModalComponent from "@/components/ModalComponent";
-import TextComponent from "@/components/TextComponent";
 import { addCustomer, customerT } from "@/store/customerSlice";
 import { BasicFieldsT } from "@/types/basicInfoTypes";
-import React, { Dispatch, SetStateAction, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import React, { Dispatch, SetStateAction } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
 const customerInfoFields: BasicFieldsT[] = [

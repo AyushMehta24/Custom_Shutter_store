@@ -8,10 +8,10 @@ interface FormContextType extends UseFormReturn<FieldValues> {}
 
 const FormContext = createContext<FormContextType | undefined>(undefined);
 
-export const useFormContext = (): FormContextType => {
+export const useCustomFormContext = (): FormContextType => {
   const context = useContext(FormContext);
   if (!context) {
-    throw new Error("useFormContext must be used within a FormProvider");
+    throw new Error("useCustomFormContext must be used within a FormProvider");
   }
   return context;
 };

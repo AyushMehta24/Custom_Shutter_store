@@ -1,4 +1,4 @@
-import { useFormContext } from "@/contexts/FormContext";
+import { useCustomFormContext } from "@/contexts/FormContext";
 import React from "react";
 
 interface SelectComponentProps {
@@ -15,17 +15,15 @@ export default function SelectComponent({
   const {
     register,
     formState: { errors },
-  } = useFormContext();
+  } = useCustomFormContext();
 
   return (
     <div className="flex flex-col gap-1">
-      <label htmlFor={name} className="font-semibold">
-        {label}
-      </label>
+      <label htmlFor={name}>{label}</label>
       <select
         id={name}
-        {...register(name, { required: `${label} is required` })} // Example of required validation
-        className={`border py-2 px-2 w-48 rounded-md focus:border-blue-500 focus:outline-none bg-white ${
+        {...register(name, { required: `${label} is required` })} 
+        className={`border py-2 px-2 w-50 rounded-md focus:border-blue-500 focus:outline-none bg-white ${
           errors[name] ? "border-red-500" : "border-gray-300"
         }`}
       >

@@ -1,4 +1,4 @@
-import { useFormContext } from "@/contexts/FormContext";
+import { useCustomFormContext } from "@/contexts/FormContext";
 import React, { ChangeEventHandler } from "react";
 // import { FormErrors } from "./types"; // Import the type
 
@@ -26,10 +26,10 @@ export default function TextComponent({
   const {
     register,
     formState: { errors },
-  } = useFormContext();
-  console.log(errors);
+  } = useCustomFormContext();
 
   // Cast errors to your specific type
+  console.log(errors , "error");
   const formErrors = errors as FormErrors;
 
   return (
@@ -43,9 +43,9 @@ export default function TextComponent({
         disabled={isDisabled}
         className="border p-2 w-48 rounded-md focus:border-blue-500 focus:outline-none"
       />
-      {formErrors[name] && (
+      {formErrors.name && (
         <span className="text-red-500">
-          {formErrors[name]?.message as string}
+          {formErrors.name?.message as string}
         </span>
       )}
     </div>

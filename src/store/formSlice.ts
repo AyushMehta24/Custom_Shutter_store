@@ -15,7 +15,7 @@ interface DiscountInfo {
 interface BasicInfo {
   staffName: string;
   customerName: string;
-  date: Date;
+  date: string;
 }
 
 interface FormData {

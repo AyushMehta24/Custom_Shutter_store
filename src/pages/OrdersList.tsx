@@ -20,6 +20,7 @@ const OrderListPage: React.FC = () => {
             <tr>
               <th className="py-2 px-4 border-b">Customer Name</th>
               <th className="py-2 px-4 border-b">Staff Name</th>
+              <th className="py-2 px-4 border-b">Date</th>
               <th className="py-2 px-4 border-b">Total Price</th>
               <th className="py-2 px-4 border-b">Discount</th>
               <th className="py-2 px-4 border-b">Payable Price</th>
@@ -45,6 +46,9 @@ const OrderListPage: React.FC = () => {
                   </td>
                   <td className="py-2 px-4 border-b">
                     {formData.basicInfo.staffName}
+                  </td>
+                  <td className="py-2 px-4 border-b">
+                    {formData.basicInfo.date}
                   </td>
                   <td className="py-2 px-4 border-b">{totalPrice}</td>
                   <td className="py-2 px-4 border-b">{discountAmount}</td>

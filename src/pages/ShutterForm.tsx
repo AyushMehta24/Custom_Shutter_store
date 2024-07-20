@@ -4,7 +4,7 @@ import { FieldValues } from "react-hook-form";
 import ShutterSection from "@/sections/ShutterSection";
 import BasicInfoSection from "@/sections/BasicInfoSection";
 import DiscountSection from "@/sections/DiscountSection";
-import { useFormContext } from "@/contexts/FormContext";
+import { useCustomFormContext } from "@/contexts/FormContext";
 import ButtonComponent from "@/components/ButtonComponent";
 import { useState } from "react";
 import AddCustomer from "@/sections/AddCustomer";
@@ -12,12 +12,17 @@ import { useDispatch } from "react-redux";
 import { addFormData } from "@/store/formSlice";
 
 export default function ShutterForm() {
-  const { handleSubmit } = useFormContext();
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = useCustomFormContext();
+
   const [isModal, setIsModal] = useState(false);
 
   const dispatch = useDispatch();
 
   const onSubmit = (data: FieldValues) => {
+    console.log(errors , "error");
     const shutterData = data.shutter.map((shutter: any) => ({
       shutterName: shutter.shutterName,
       width: shutter.width,
@@ -33,7 +38,7 @@ export default function ShutterForm() {
       basicInfo: {
         staffName: data.basicInfo.staffName,
         customerName: data.basicInfo.customerName,
-        date: data.basicInfo.date.toISOString().split('T')[0],
+        date: data.basicInfo.date.toISOString().split("T")[0],
       },
       shutter: shutterData,
     };

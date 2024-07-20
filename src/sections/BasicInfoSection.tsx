@@ -8,6 +8,7 @@ import ButtonComponent from "@/components/ButtonComponent";
 import SelectComponent from "@/components/SelectComponent";
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
+import { customerT } from "@/store/customerSlice";
 
 const BasciInfoFields: BasicFieldsT[] = [
   {
@@ -32,18 +33,18 @@ export default function BasicInfoSection({
 }: {
   setIsModal: Dispatch<SetStateAction<boolean>>;
 }): JSX.Element {
-  const customers = useSelector(
-    (state: RootState) => state.customers.customers
+  const customers: customerT[] = useSelector(
+    (state: RootState): customerT[] => state.customers.customers
   );
   const customerNames: string[] = [];
-  customers.map((customer) => {
+  customers.map((customer: customerT) => {
     customerNames.push(customer.customerName);
   });
   return (
     <div className="">
       <h2 className="text-xl font-semibold">Basic Information</h2>
       <div className=" flex gap-5">
-        {BasciInfoFields.map((field) => {
+        {BasciInfoFields.map((field: BasicFieldsT) => {
           if (field.type === "select") {
             return (
               <SelectComponent
@@ -66,7 +67,10 @@ export default function BasicInfoSection({
         })}
         <div className="flex items-end">
           <ButtonComponent
-            handleClick={() => setIsModal(true)}
+            handleClick={(e) => {
+              e.preventDefault();
+              setIsModal(true);
+            }}
             label={"Add New Customer"}
             customClass={" w-40 text-blue-500 border-blue-500 py-2"}
           />

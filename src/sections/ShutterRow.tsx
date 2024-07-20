@@ -4,7 +4,7 @@ import ButtonComponent from "@/components/ButtonComponent";
 import SelectComponent from "@/components/SelectComponent";
 import TextComponent from "@/components/TextComponent";
 import { AmountContext } from "@/contexts/AmountContext";
-import { useFormContext } from "@/contexts/FormContext";
+import { useCustomFormContext } from "@/contexts/FormContext";
 import React, { useContext, useEffect, useState } from "react";
 
 const ShutterNames: string[] = ["A", "B", "C"];
@@ -18,7 +18,7 @@ export default function ShutterRow({
   handleRemoveShutter: (index: number) => void;
   handleCloneShutter: (index: number) => void;
 }) {
-  const { register, setValue, watch } = useFormContext();
+  const { register, setValue, watch } = useCustomFormContext();
 
   const { setFinalAmount } = useContext(AmountContext) as {
     finalAmount: number;

@@ -1,4 +1,4 @@
-import { useFormContext } from "@/contexts/FormContext";
+import { useCustomFormContext } from "@/contexts/FormContext";
 import React, { ChangeEventHandler } from "react";
 // import { FormErrors } from "./types"; // Import your error types
 
@@ -32,7 +32,7 @@ export default function RadioComponent({
   const {
     register,
     formState: { errors },
-  } = useFormContext();
+  } = useCustomFormContext();
 
   // Cast errors to your specific type
   const formErrors = errors as FormErrors;

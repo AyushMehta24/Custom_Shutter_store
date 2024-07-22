@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function NavBar() {
   return (
-    <div>
+    <div className="flex gap-5 ">
       <Link href="/">Shutter Form</Link>
       <Link href="/list">Customers List</Link>
     </div>

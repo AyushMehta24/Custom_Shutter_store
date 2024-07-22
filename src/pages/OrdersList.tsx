@@ -3,22 +3,23 @@
 import React, { useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
-import { deleteFormData } from "@/store/formSlice";
+import { FormData, Shutter, deleteFormData } from "@/store/formSlice";
 import Link from "next/link";
 import { shallowEqual } from "react-redux";
 import ConfirmationModal from "@/components/ConfirmationModal";
+import { Dispatch, UnknownAction } from "@reduxjs/toolkit";
 
 const OrderListPage: React.FC = ():JSX.Element => {
   const [isModal, setIsModal] = useState(false);
   const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
 
-  const formDataArray = useSelector(
-    (state: RootState) => state.form,
+  const formDataArray:FormData[] = useSelector(
+    (state: RootState):FormData[] => state.form,
     shallowEqual
   );
-  const dispatch = useDispatch();
+  const dispatch: Dispatch<UnknownAction> = useDispatch();
 
-  const handleDelete = useCallback((index: number) => {
+  const handleDelete= useCallback((index: number) => {
     setDeleteIndex(index);
     setIsModal(true);
   }, []);
@@ -47,16 +48,16 @@ const OrderListPage: React.FC = ():JSX.Element => {
             </tr>
           </thead>
           <tbody>
-            {formDataArray.map((formData, index) => {
-              const totalPrice = formData.shutter.reduce(
-                (sum, shutter) => sum + shutter.area,
+            {formDataArray.map((formData:FormData, index:number):JSX.Element => {
+              const totalPrice:number = formData.shutter.reduce(
+                (sum:number, shutter:Shutter):number => sum + shutter.area,
                 0
               );
-              const discountAmount =
+              const discountAmount:number =
                 formData.discountInfo.discountType === "percentage"
                   ? (totalPrice * Number(formData.discountInfo.discount)) / 100
                   : Number(formData.discountInfo.discount);
-              const payablePrice = totalPrice - discountAmount;
+              const payablePrice:number = totalPrice - discountAmount;
 
               return (
                 <tr key={index} className="">

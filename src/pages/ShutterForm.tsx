@@ -13,10 +13,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "@/validators/shutterFormSchema";
 import { FormType } from "@/types/basicInfoTypes";
 import { AmountContext } from "@/contexts/AmountContext";
-import { useRouter, useSearchParams } from "next/navigation";
+import { ReadonlyURLSearchParams, useRouter, useSearchParams } from "next/navigation";
 import { RootState } from "@/store/store";
 
-export default function ShutterForm() {
+export default function ShutterForm():JSX.Element {
   const { finalAmount } = useContext(AmountContext) as {
     finalAmount: number;
   };
@@ -45,8 +45,8 @@ export default function ShutterForm() {
     },
   });
 
-  const params = useSearchParams();
-  const id = params?.get("id");
+  const params: ReadonlyURLSearchParams | null = useSearchParams();
+  const id: string | null | undefined = params?.get("id");
 
   const orderDetails = useSelector((state: RootState) => {
     if (!id) return undefined;

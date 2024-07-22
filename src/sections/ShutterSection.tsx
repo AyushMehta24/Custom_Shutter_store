@@ -14,6 +14,13 @@ import ShutterRow from "./ShutterRow";
 import ButtonComponent from "@/components/ButtonComponent";
 import { FormType } from "@/types/basicInfoTypes";
 
+type ShutterListT ={
+  shutterName: string;
+  width: string;
+  height: string;
+  area: number;
+}[]
+
 const ShutterSection = ({
   register,
   errors,
@@ -42,7 +49,9 @@ const ShutterSection = ({
     name: "shutter",
   });
 
-  const shutterList = watch("shutter");
+
+
+  const shutterList:ShutterListT = watch("shutter");
 
   useEffect(() => {
     let total: number = 0;

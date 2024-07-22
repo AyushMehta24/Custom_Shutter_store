@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface Shutter {
+export interface Shutter {
   shutterName: string;
   width: string;
   height: string;

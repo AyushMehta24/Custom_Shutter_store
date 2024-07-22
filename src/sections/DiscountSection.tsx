@@ -42,7 +42,7 @@ const DiscountSection: React.FC<{
     []
   );
 
-  const payableAmount = useMemo(() => {
+  const payableAmount:number = useMemo(():number => {
     if (discount > 0 && discount <= finalAmount) {
       return discountType === "amount"
         ? finalAmount - discount

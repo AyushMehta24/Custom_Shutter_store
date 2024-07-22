@@ -1,4 +1,6 @@
+import { customerT } from "@/store/customerSlice";
 import React, { ChangeEventHandler } from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 export default function CustomerInput({
   label,
@@ -11,14 +13,14 @@ export default function CustomerInput({
   customClass = "",
 }: {
   label: string;
-  name: string;
+  name: any;
   type: string;
   handleChange?:
     | ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
     | undefined;
   isDisabled?: boolean;
-  register: any;
-  errors: any;
+  register: UseFormRegister<customerT>;
+  errors: FieldErrors<any>;
   customClass?: string;
 }) {
   return (
@@ -32,7 +34,7 @@ export default function CustomerInput({
         disabled={isDisabled}
         className={`border py-2 px-2 w-48 rounded-md focus:border-blue-500 focus:outline-none ${customClass}`}
       />
-      <span>{errors.name && (errors.name?.message as string)}</span>
+      <span className="text-red-500">{errors[name]?.message as string}</span>
     </div>
   );
 }

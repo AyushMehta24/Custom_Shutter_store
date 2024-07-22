@@ -5,21 +5,22 @@ import ShutterSection from "@/sections/ShutterSection";
 import BasicInfoSection from "@/sections/BasicInfoSection";
 import DiscountSection from "@/sections/DiscountSection";
 import ButtonComponent from "@/components/ButtonComponent";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useCallback } from "react";
 import AddCustomer from "@/sections/AddCustomer";
 import { useDispatch, useSelector } from "react-redux";
-import { addFormData } from "@/store/formSlice";
+import { addFormData, editFormData } from "@/store/formSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "@/validators/shutterFormSchema";
 import { FormType } from "@/types/basicInfoTypes";
 import { AmountContext } from "@/contexts/AmountContext";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { RootState } from "@/store/store";
 
 export default function ShutterForm() {
   const { finalAmount } = useContext(AmountContext) as {
     finalAmount: number;
   };
+
   const {
     formState: { errors },
     handleSubmit,
@@ -30,26 +31,36 @@ export default function ShutterForm() {
     reset,
   } = useForm<FormType>({
     resolver: yupResolver(validationSchema),
-    context: {
-      finalAmount: finalAmount,
+    defaultValues: {
+      discountInfo: { discount: 0, discountType: "amount" },
+      shutter: [
+        {
+          shutterName: "",
+          width: "",
+          height: "",
+          area: 0,
+        },
+      ],
     },
   });
 
   const params = useSearchParams();
   const id = params?.get("id");
 
-  const orderDetails = useSelector(
-    (state: RootState) => state.form[(id && +id) || 0]
-  );
-  console.log(orderDetails);
+  const orderDetails = useSelector((state: RootState) => {
+    if (!id) return undefined;
+    return state.form.find((order, index) => index === +id);
+  });
 
   useEffect(() => {
-    if (id) {
+    if (orderDetails) {
       reset({
         basicInfo: {
           staffName: orderDetails.basicInfo.staffName,
           customerName: orderDetails.basicInfo.customerName,
-          date: new Date(orderDetails.basicInfo.date),
+          date: new Date(orderDetails.basicInfo.date)
+            .toISOString()
+            .split("T")[0],
         },
         shutter: orderDetails.shutter,
         discountInfo: {
@@ -58,46 +69,48 @@ export default function ShutterForm() {
         },
       });
     }
-
-    // if (defaultValues.basicInfo) {
-    //   reset(defaultValues.basicInfo);
-    // }
-  }, [id, reset]);
+  }, [id, orderDetails, reset]);
 
   const [isModal, setIsModal] = useState(false);
 
   const dispatch = useDispatch();
-
-  const onSubmit: SubmitHandler<FieldValues> = (data: FieldValues) => {
-    const shutterData = data.shutter.map((shutter: any) => ({
-      shutterName: shutter.shutterName,
-      width: shutter.width,
-      height: shutter.height,
-      area: Number(shutter.width) * Number(shutter.height),
-    }));
-
-    const formData = {
-      discountInfo: {
-        discountType: data.discountInfo.discountType,
-        discount: data.discountInfo.discount,
-      },
-      basicInfo: {
-        staffName: data.basicInfo.staffName,
-        customerName: data.basicInfo.customerName,
-        date: data.basicInfo.date.toISOString().split("T")[0],
-      },
-      shutter: shutterData,
-    };
-
-    dispatch(addFormData(formData));
-  };
-
   const route = useRouter();
-  function handleNavigate() {
-    route.push("/list");
-  }
+
+  const onSubmit: SubmitHandler<FieldValues> = useCallback(
+    (data: FieldValues) => {
+      const shutterData = data.shutter.map((shutter: any) => ({
+        shutterName: shutter.shutterName,
+        width: shutter.width,
+        height: shutter.height,
+        area: Number(shutter.width) * Number(shutter.height),
+      }));
+
+      const formData = {
+        discountInfo: {
+          discountType: data.discountInfo.discountType,
+          discount: data.discountInfo.discount,
+        },
+        basicInfo: {
+          staffName: data.basicInfo.staffName,
+          customerName: data.basicInfo.customerName,
+          date: data.basicInfo.date,
+        },
+        shutter: shutterData,
+      };
+
+      if (id) {
+        dispatch(editFormData({ index: +id, data: formData }));
+      } else {
+        dispatch(addFormData(formData));
+      }
+
+      route.push("/list");
+    },
+    [dispatch, id, route]
+  );
+
   return (
-    <div id="shutterForm" className="w-full ">
+    <div id="shutterForm" className="w-full">
       <div id="basicInfo" className="flex justify-center h-full">
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -120,7 +133,6 @@ export default function ShutterForm() {
             type="submit"
             label={"Proceed"}
             customClass={"mb-1 text-green-500 border-green-500"}
-            handleClick={() => handleNavigate()}
           />
         </form>
         {isModal && <AddCustomer setIsModal={setIsModal} />}
@@ -128,3 +140,5 @@ export default function ShutterForm() {
     </div>
   );
 }
+
+ShutterForm.displayName = "ShutterForm";

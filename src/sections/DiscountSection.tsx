@@ -4,7 +4,7 @@ import RadioComponent from "@/components/RadioComponent";
 import TextComponent from "@/components/TextComponent";
 import { AmountContext } from "@/contexts/AmountContext";
 import { FormType } from "@/types/basicInfoTypes";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useCallback, useMemo } from "react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 
 const Radio_Options: {
@@ -20,18 +20,36 @@ const Radio_Options: {
   },
 ];
 
-export default function DiscountSection({
-  register,
-  errors,
-}: {
+const DiscountSection: React.FC<{
   register: UseFormRegister<FormType>;
   errors: FieldErrors<FormType>;
-}): JSX.Element {
-  const { finalAmount } = useContext(AmountContext) as {
-    finalAmount: number;
-  };
+}> = ({ register, errors }) => {
+  const { finalAmount } = useContext(AmountContext) as { finalAmount: number };
   const [discount, setDiscount] = useState(0);
   const [discountType, setDiscountType] = useState("amount");
+
+  const handleDiscountTypeChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setDiscountType(e.target.value);
+    },
+    []
+  );
+
+  const handleDiscountChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setDiscount(+e.target.value);
+    },
+    []
+  );
+
+  const payableAmount = useMemo(() => {
+    if (discount > 0 && discount <= finalAmount) {
+      return discountType === "amount"
+        ? finalAmount - discount
+        : finalAmount - (finalAmount * discount) / 100;
+    }
+    return finalAmount;
+  }, [discount, discountType, finalAmount]);
 
   return (
     <div className="flex flex-col gap-3">
@@ -42,9 +60,7 @@ export default function DiscountSection({
           errors={errors}
           options={Radio_Options}
           label={"Discount Type"}
-          handleChange={(e) => {
-            setDiscountType(e.target.value);
-          }}
+          handleChange={handleDiscountTypeChange}
         />
         <TextComponent
           register={register}
@@ -52,19 +68,14 @@ export default function DiscountSection({
           label={"Discount"}
           name={"discountInfo.discount"}
           type={"text"}
-          handleChange={(e) => {
-            setDiscount(+e.target.value);
-          }}
+          handleChange={handleDiscountChange}
         />
-        <p>
-          Payable Amount :{" "}
-          {discount > 0 && discount <= finalAmount
-            ? discountType === "amount"
-              ? finalAmount - discount
-              : finalAmount - (finalAmount * discount) / 100
-            : finalAmount}
-        </p>
+        <p>Payable Amount: {payableAmount}</p>
       </div>
     </div>
   );
-}
+};
+
+DiscountSection.displayName = "DiscountSection";
+
+export default React.memo(DiscountSection);

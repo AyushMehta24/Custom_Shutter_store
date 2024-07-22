@@ -19,7 +19,7 @@ export interface FormType {
   basicInfo: {
     staffName: string;
     customerName: string;
-    date: Date;
+    date: string;
   };
   shutter: {
     shutterName: string;

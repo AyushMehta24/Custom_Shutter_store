@@ -2,9 +2,11 @@ import React, { Dispatch, SetStateAction } from "react";
 import ButtonComponent from "./ButtonComponent";
 
 export default function ModalComponent({
+  label,
   children,
   setIsModal,
 }: {
+  label: string;
   children: JSX.Element;
   setIsModal: Dispatch<SetStateAction<boolean>>;
 }) {
@@ -14,7 +16,7 @@ export default function ModalComponent({
         <div className="bg-slate-100 rounded-lg shadow">
           <div className="flex justify-end">
             <div className="bg-red 100 mr-auto w-full grid grid-cols-2 ">
-              <p className="flex justify-center items-center">New Customer</p>
+              <p className="flex justify-center items-center">{label}</p>
               <div className="flex justify-end">
                 <ButtonComponent
                   label="X"
@@ -24,7 +26,7 @@ export default function ModalComponent({
               </div>
             </div>
           </div>
-            <div className="border border-grey-200"></div>
+          <div className="border border-grey-200"></div>
           {children}
         </div>
       </div>

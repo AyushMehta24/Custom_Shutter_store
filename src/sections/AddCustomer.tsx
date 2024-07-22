@@ -1,66 +1,75 @@
 "use client";
 
+import React, { Dispatch, SetStateAction, useCallback } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import ButtonComponent from "@/components/ButtonComponent";
 import CustomerInput from "@/components/CustomerInputComponent";
 import ModalComponent from "@/components/ModalComponent";
 import { addCustomer, customerT } from "@/store/customerSlice";
 import { BasicFieldsT } from "@/types/basicInfoTypes";
-import React, { Dispatch, SetStateAction } from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { RootState } from "@/store/store";
+import customerSchema from "@/validators/customerSchema";
 
 const customerInfoFields: BasicFieldsT[] = [
-  {
-    label: "Name",
-    name: "customerName",
-    type: "text",
-  },
-  {
-    label: "Email",
-    name: "customerEmail",
-    type: "text",
-  },
-  {
-    label: "Contact",
-    name: "customerContact",
-    type: "text",
-  },
+  { label: "Name", name: "customerName", type: "text" },
+  { label: "Email", name: "customerEmail", type: "text" },
+  { label: "Contact", name: "customerContact", type: "text" },
 ];
 
-export default function AddCustomer({
-  setIsModal,
-}: {
+const AddCustomer: React.FC<{
   setIsModal: Dispatch<SetStateAction<boolean>>;
-}) {
+}> = ({ setIsModal }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<customerT>();
-  const dispatch = useDispatch();
+    setError,
+  } = useForm<customerT>({
+    resolver: yupResolver(customerSchema),
+  });
 
-  const onSubmit = (data: customerT) => {
-    dispatch(addCustomer(data));
-    setIsModal(false);
-  };
+  const dispatch = useDispatch();
+  const customers = useSelector(
+    (state: RootState) => state.customers.customers
+  );
+
+  const onSubmit = useCallback(
+    (data: customerT) => {
+      const emailExists = customers.some(
+        (customer) => customer.customerEmail === data.customerEmail
+      );
+
+      if (emailExists) {
+        setError("customerEmail", {
+          type: "manual",
+          message: "Email already exists",
+        });
+      } else {
+        dispatch(addCustomer(data));
+        setIsModal(false);
+      }
+    },
+    [customers, dispatch, setError, setIsModal]
+  );
 
   return (
-    <ModalComponent setIsModal={setIsModal}>
+    <ModalComponent setIsModal={setIsModal} label={"Add Customer"}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="flex flex-col z-10 realtive gap-5 p-5 ">
-          {customerInfoFields.map((field: BasicFieldsT): JSX.Element => {
-            return (
-              <CustomerInput
-                key={field.name}
-                label={field.label}
-                name={field.name}
-                type={field.type}
-                register={register}
-                errors={errors}
-                customClass="w-full"
-              />
-            );
-          })}
+        <div className="flex flex-col z-10 relative gap-5 p-5">
+          {customerInfoFields.map((field) => (
+            <CustomerInput
+              key={field.name}
+              label={field.label}
+              name={field.name}
+              type={field.type}
+              register={register}
+              errors={errors}
+              customClass="w-full"
+            />
+          ))}
         </div>
         <div className="flex justify-end m-2">
           <ButtonComponent
@@ -72,4 +81,8 @@ export default function AddCustomer({
       </form>
     </ModalComponent>
   );
-}
+};
+
+AddCustomer.displayName = "AddCustomer";
+
+export default React.memo(AddCustomer);

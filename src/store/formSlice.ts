@@ -60,7 +60,7 @@ const formSlice = createSlice({
       state,
       action: PayloadAction<{ index: number; data: FormData }>
     ) => {
-      state[action.payload.index] = action.payload.data; // Update form data at the specified index
+      state[action.payload.index] = action.payload.data;
     },
   },
 });

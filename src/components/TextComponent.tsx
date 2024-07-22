@@ -1,7 +1,7 @@
 import { FormType } from "@/types/basicInfoTypes";
 import React, { ChangeEventHandler } from "react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import _ from "lodash"
+import _ from "lodash";
 
 export type FormErrors = {
   [key: string]: {
@@ -16,7 +16,7 @@ export default function TextComponent({
   handleChange,
   isDisabled = false,
   register,
-  errors
+  errors,
 }: {
   label: string;
   name: any;
@@ -28,10 +28,7 @@ export default function TextComponent({
   register: UseFormRegister<FormType>;
   errors: FieldErrors<any>;
 }) {
-
-
   const formErrors = errors as FormErrors;
-
 
   return (
     <div className="flex flex-col gap-1">
@@ -44,9 +41,9 @@ export default function TextComponent({
         disabled={isDisabled}
         className="border p-2 w-48 rounded-md focus:border-blue-500 focus:outline-none"
       />
-        <span className="text-red-500">
-          {_.get(formErrors,`${name}.message`) as string }
-        </span>
+      <span className="text-red-500">
+        {_.get(formErrors, `${name}.message`) as string}
+      </span>
     </div>
   );
 }

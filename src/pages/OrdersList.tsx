@@ -1,16 +1,33 @@
-import React, { useEffect, useState } from "react";
+// pages/OrderListPage.tsx
+
+import React, { useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store/store"; // Adjust this import based on your store setup
-import { deleteFormData } from "@/store/formSlice"; // Adjust import based on your structure
+import { RootState } from "@/store/store";
+import { deleteFormData } from "@/store/formSlice";
 import Link from "next/link";
+import { shallowEqual } from "react-redux";
+import ConfirmationModal from "@/components/ConfirmationModal";
 
 const OrderListPage: React.FC = () => {
-  const formDataArray = useSelector((state: RootState) => state.form);
+  const [isModal, setIsModal] = useState(false);
+  const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
+
+  const formDataArray = useSelector(
+    (state: RootState) => state.form,
+    shallowEqual
+  );
   const dispatch = useDispatch();
 
-  const handleDelete = (index: number) => {
-    dispatch(deleteFormData(index));
-  };
+  const handleDelete = useCallback((index: number) => {
+    setDeleteIndex(index);
+    setIsModal(true);
+  }, []);
+
+  const confirmDelete = useCallback(() => {
+    if (deleteIndex !== null) {
+      dispatch(deleteFormData(deleteIndex));
+    }
+  }, [dispatch, deleteIndex]);
 
   return (
     <div className="p-5">
@@ -75,8 +92,20 @@ const OrderListPage: React.FC = () => {
       ) : (
         <div className="text-center text-gray-500">No data available.</div>
       )}
+
+      {isModal && (
+        <ConfirmationModal
+          label=""
+          message="Are you sure you want to delete this order?"
+          onConfirm={confirmDelete}
+          onCancel={() => setIsModal(false)}
+          setIsModal={setIsModal}
+        />
+      )}
     </div>
   );
 };
 
-export default OrderListPage;
+OrderListPage.displayName = "OrderListPage";
+
+export default React.memo(OrderListPage);

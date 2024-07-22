@@ -45,14 +45,13 @@ const ShutterSection = ({
   const shutterList = watch("shutter");
 
   useEffect(() => {
-    const total =
-      shutterList?.reduce(
-        (acc: number, shutter: any) => acc + shutter.area,
-        0
-      ) || 0;
+    let total: number = 0;
+    shutterList &&
+      shutterList.map((shutter: any) => {
+        total += shutter.area;
+      });
     setFinalAmount(total);
-  }, [shutterList, setFinalAmount]);
-
+  });
   const handleAddShutter = useCallback(() => {
     appendShutter({
       shutterName: "",

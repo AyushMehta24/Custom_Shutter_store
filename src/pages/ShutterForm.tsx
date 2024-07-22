@@ -31,6 +31,7 @@ export default function ShutterForm() {
     reset,
   } = useForm<FormType>({
     resolver: yupResolver(validationSchema),
+    context:{finalAmount:finalAmount},
     defaultValues: {
       discountInfo: { discount: 0, discountType: "amount" },
       shutter: [

@@ -18,7 +18,7 @@ interface BasicInfo {
   date: string;
 }
 
-interface FormData {
+export interface FormData {
   discountInfo: DiscountInfo;
   basicInfo: BasicInfo;
   shutter: Shutter[];

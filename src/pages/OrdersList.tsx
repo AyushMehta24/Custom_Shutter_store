@@ -8,7 +8,7 @@ import Link from "next/link";
 import { shallowEqual } from "react-redux";
 import ConfirmationModal from "@/components/ConfirmationModal";
 
-const OrderListPage: React.FC = () => {
+const OrderListPage: React.FC = ():JSX.Element => {
   const [isModal, setIsModal] = useState(false);
   const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
 
@@ -33,7 +33,7 @@ const OrderListPage: React.FC = () => {
     <div className="p-5">
       <h1 className="text-2xl font-bold mb-4">Order List</h1>
       {formDataArray.length > 0 ? (
-        <table className="min-w-full bg-white border border-gray-300">
+        <table className=" bg-white border border-gray-300">
           <thead>
             <tr>
               <th className="py-2 px-4 border-b">Customer Name</th>
@@ -59,7 +59,7 @@ const OrderListPage: React.FC = () => {
               const payablePrice = totalPrice - discountAmount;
 
               return (
-                <tr key={index}>
+                <tr key={index} className="">
                   <td className="py-2 px-4 border-b">
                     {formData.basicInfo.customerName}
                   </td>

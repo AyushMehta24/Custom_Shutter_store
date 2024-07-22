@@ -18,7 +18,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   onCancel,
   setIsModal,
   label,
-}) => {
+}:ConfirmationModalProps):JSX.Element => {
   return (
     <ModalComponent setIsModal={setIsModal} label={label}>
       <div className="p-4">
@@ -27,12 +27,12 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
           <ButtonComponent
             label="Cancel"
             customClass="bg-gray-500 text-white border-gray-500"
-            handleClick={() => setIsModal(false)}
+            handleClick={():void => setIsModal(false)}
           />
           <ButtonComponent
             label="Confirm"
             customClass="bg-red-500 text-white border-red-500"
-            handleClick={() => {
+            handleClick={():void => {
               onConfirm();
               setIsModal(false);
             }}

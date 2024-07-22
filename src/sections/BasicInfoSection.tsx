@@ -42,13 +42,13 @@ const BasicInfoSection = React.memo(
       (state: RootState): customerT[] => state.customers.customers
     );
 
-    const customerNames = React.useMemo(
-      () => customers.map((customer) => customer.customerName),
+    const customerNames:string[] = React.useMemo(
+      ():string[] => customers.map((customer:customerT):string => customer.customerName),
       [customers]
     );
 
     const handleAddCustomerClick = useCallback(
-      (e: React.MouseEvent<HTMLButtonElement>) => {
+      (e: React.MouseEvent<HTMLButtonElement>):void => {
         e.preventDefault();
         setIsModal(true);
       },
@@ -59,7 +59,7 @@ const BasicInfoSection = React.memo(
       <div className="">
         <h2 className="text-xl font-semibold">Basic Information</h2>
         <div className=" flex gap-5">
-          {BasicInfoFields.map((field: BasicFieldsT, index: number) => {
+          {BasicInfoFields.map((field: BasicFieldsT, index: number):JSX.Element => {
             if (field.type === "select") {
               return (
                 <SelectComponent

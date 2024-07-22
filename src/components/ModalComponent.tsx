@@ -9,7 +9,7 @@ export default function ModalComponent({
   label: string;
   children: JSX.Element;
   setIsModal: Dispatch<SetStateAction<boolean>>;
-}) {
+}):JSX.Element {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="relative p-4 max-w-sm w-full">
@@ -21,7 +21,7 @@ export default function ModalComponent({
                 <ButtonComponent
                   label="X"
                   customClass="border-2 border-slate-300 hover:bg-red-500 hover:border-red-500 hover:text-white m-2 mr-3 w-12 font-semibold"
-                  handleClick={() => setIsModal(false)}
+                  handleClick={():void => setIsModal(false)}
                 />
               </div>
             </div>

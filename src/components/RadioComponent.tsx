@@ -34,14 +34,14 @@ export default function RadioComponent({
     | undefined;
   register: UseFormRegister<FormType>;
   errors: FieldErrors<any>;
-}) {
+}):JSX.Element {
   const formErrors = errors as FormErrors;
 
 
   return (
     <div className="flex gap-5 items-center">
       <label>{label}</label>
-      {options.map((option: OptionT, index: number) => {
+      {options.map((option: OptionT, index: number):JSX.Element => {
         return (
           <div key={index} className="flex gap-2">
             <input

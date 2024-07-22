@@ -27,7 +27,7 @@ export default function TextComponent({
   isDisabled?: boolean;
   register: UseFormRegister<FormType>;
   errors: FieldErrors<any>;
-}) {
+}):JSX.Element {
   const formErrors = errors as FormErrors;
 
   return (

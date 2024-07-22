@@ -22,7 +22,7 @@ export default function CustomerInput({
   register: UseFormRegister<customerT>;
   errors: FieldErrors<any>;
   customClass?: string;
-}) {
+}):JSX.Element {
   return (
     <div className="flex flex-col gap-1">
       <label htmlFor={name}>{label}</label>

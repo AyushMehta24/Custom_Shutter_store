@@ -18,7 +18,7 @@ export default function SelectComponent({
   options,
   register,
   errors,
-}: SelectComponentProps) {
+}: SelectComponentProps):JSX.Element {
   const formErrors = errors as FormErrors;
 
   return (
@@ -34,7 +34,7 @@ export default function SelectComponent({
         <option value="" disabled>
           Select {label}
         </option>
-        {options.map((option: string) => (
+        {options.map((option: string):JSX.Element => (
           <option key={option} value={option}>
             {option}
           </option>

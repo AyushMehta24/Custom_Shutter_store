@@ -12,6 +12,7 @@ import { addCustomer, customerT } from "@/store/customerSlice";
 import { BasicFieldsT } from "@/types/basicInfoTypes";
 import { RootState } from "@/store/store";
 import customerSchema from "@/validators/customerSchema";
+import { UnknownAction } from "@reduxjs/toolkit";
 
 const customerInfoFields: BasicFieldsT[] = [
   { label: "Name", name: "customerName", type: "text" },
@@ -21,7 +22,7 @@ const customerInfoFields: BasicFieldsT[] = [
 
 const AddCustomer: React.FC<{
   setIsModal: Dispatch<SetStateAction<boolean>>;
-}> = ({ setIsModal }) => {
+}> = ({ setIsModal }:{ setIsModal: React.Dispatch<React.SetStateAction<boolean>>}):JSX.Element => {
   const {
     register,
     handleSubmit,
@@ -31,15 +32,15 @@ const AddCustomer: React.FC<{
     resolver: yupResolver(customerSchema),
   });
 
-  const dispatch = useDispatch();
-  const customers = useSelector(
-    (state: RootState) => state.customers.customers
+  const dispatch:Dispatch<UnknownAction> = useDispatch();
+  const customers:customerT[] = useSelector(
+    (state: RootState):customerT[] => state.customers.customers
   );
 
-  const onSubmit = useCallback(
-    (data: customerT) => {
-      const emailExists = customers.some(
-        (customer) => customer.customerEmail === data.customerEmail
+  const onSubmit:(data: customerT) => void = useCallback(
+    (data: customerT):void => {
+      const emailExists:boolean = customers.some(
+        (customer:customerT):boolean => customer.customerEmail === data.customerEmail
       );
 
       if (emailExists) {
@@ -59,7 +60,7 @@ const AddCustomer: React.FC<{
     <ModalComponent setIsModal={setIsModal} label={"Add Customer"}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col z-10 relative gap-5 p-5">
-          {customerInfoFields.map((field) => (
+          {customerInfoFields.map((field:BasicFieldsT):JSX.Element => (
             <CustomerInput
               key={field.name}
               label={field.label}

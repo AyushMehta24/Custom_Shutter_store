@@ -10,7 +10,7 @@ export default function ButtonComponent({
   label: string;
   customClass?: string;
   type?: "button" | "submit" | "reset" | undefined;
-}) {
+}):JSX.Element {
   return (
     <button
       type={type}

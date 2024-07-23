@@ -12,6 +12,7 @@ export const AmountProvider: ({ children }: {
   children: ReactNode;
 }) => React.JSX.Element = ({ children }: { children: ReactNode }):JSX.Element => {
   const [finalAmount, setFinalAmount] = useState(0);
+  console.log(finalAmount);
   return (
     <AmountContext.Provider value={{ finalAmount, setFinalAmount }}>
       {children}

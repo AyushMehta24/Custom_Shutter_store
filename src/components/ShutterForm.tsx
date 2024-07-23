@@ -7,7 +7,7 @@ import ShutterSection, {
 } from "@/sections/ShutterSection";
 import BasicInfoSection from "@/sections/BasicInfoSection";
 import DiscountSection from "@/sections/DiscountSection";
-import ButtonComponent from "@/components/ButtonComponent";
+import ButtonComponent from "@/components/common/ButtonComponent";
 import { useContext, useEffect, useState, useCallback } from "react";
 import AddCustomer from "@/sections/AddCustomer";
 import { useDispatch, useSelector } from "react-redux";

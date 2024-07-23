@@ -1,4 +1,4 @@
-// "use client"
+"use client"
 
 import React, { useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,7 +6,7 @@ import { RootState } from "@/store/store";
 import { FormData, Shutter, deleteFormData } from "@/store/formSlice";
 import Link from "next/link";
 import { shallowEqual } from "react-redux";
-import ConfirmationModal from "@/components/ConfirmationModal";
+import ConfirmationModal from "@/components/common/ConfirmationModal";
 import { Dispatch, UnknownAction } from "@reduxjs/toolkit";
 
 const OrderListPage: React.FC = ():JSX.Element => {

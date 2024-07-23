@@ -11,7 +11,7 @@ import {
 } from "react-hook-form";
 import { AmountContext } from "@/contexts/AmountContext";
 import ShutterRow from "./ShutterRow";
-import ButtonComponent from "@/components/ButtonComponent";
+import ButtonComponent from "@/components/common/ButtonComponent";
 import { FormType } from "@/types/basicInfoTypes";
 
 export type ShutterListT =ShutterT[]

@@ -5,9 +5,9 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import ButtonComponent from "@/components/ButtonComponent";
-import CustomerInput from "@/components/CustomerInputComponent";
-import ModalComponent from "@/components/ModalComponent";
+import ButtonComponent from "@/components/common/ButtonComponent";
+import CustomerInput from "@/components/common/CustomerInputComponent";
+import ModalComponent from "@/components/common/ModalComponent";
 import { addCustomer, customerT } from "@/store/customerSlice";
 import { BasicFieldsT } from "@/types/basicInfoTypes";
 import { RootState } from "@/store/store";

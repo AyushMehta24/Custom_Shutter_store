@@ -1,8 +1,8 @@
 "use client";
 
-import ButtonComponent from "@/components/ButtonComponent";
-import SelectComponent from "@/components/SelectComponent";
-import TextComponent from "@/components/TextComponent";
+import ButtonComponent from "@/components/common/ButtonComponent";
+import SelectComponent from "@/components/common/SelectComponent";
+import TextComponent from "@/components/common/TextComponent";
 import { AmountContext } from "@/contexts/AmountContext";
 import { FormType } from "@/types/basicInfoTypes";
 import React, { useContext, useEffect, useState } from "react";

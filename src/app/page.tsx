@@ -1,7 +1,7 @@
 "use client";
 
 import { AmountProvider } from "@/contexts/AmountContext";
-import ShutterForm from "@/appPages/ShutterForm";
+import ShutterForm from "@/components/ShutterForm";
 import store from "@/store/store";
 import { Provider } from "react-redux";
 import { Suspense } from "react";

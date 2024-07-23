@@ -3,9 +3,9 @@
 import React, { Dispatch, SetStateAction, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
-import TextComponent from "@/components/TextComponent";
-import ButtonComponent from "@/components/ButtonComponent";
-import SelectComponent from "@/components/SelectComponent";
+import TextComponent from "@/components/common/TextComponent";
+import ButtonComponent from "@/components/common/ButtonComponent";
+import SelectComponent from "@/components/common/SelectComponent";
 import { RootState } from "@/store/store";
 import { customerT } from "@/store/customerSlice";
 import { BasicFieldsT, FormType } from "@/types/basicInfoTypes";

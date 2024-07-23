@@ -1,7 +1,7 @@
 "use client";
 
-import RadioComponent from "@/components/RadioComponent";
-import TextComponent from "@/components/TextComponent";
+import RadioComponent from "@/components/common/RadioComponent";
+import TextComponent from "@/components/common/TextComponent";
 import { AmountContext } from "@/contexts/AmountContext";
 import { FormType } from "@/types/basicInfoTypes";
 import React, { useContext, useState, useCallback, useMemo } from "react";

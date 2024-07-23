@@ -31,6 +31,7 @@ export interface FormType {
     discountType: string;
     discount: number;
   };
+  finalAmount: number;
 }
 
 export type NameT =
@@ -47,4 +48,5 @@ export type NameT =
   | `shutter.${number}.width`
   | `shutter.${number}.height`
   | `shutter.${number}.shutterName`
-  | `shutter.${number}.area`;  
+  | `shutter.${number}.area`
+  | "finalAmount";

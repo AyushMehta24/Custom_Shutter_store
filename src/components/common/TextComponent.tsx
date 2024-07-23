@@ -9,7 +9,6 @@ export type FormErrors = {
   };
 };
 
-
 export default function TextComponent({
   label,
   name,
@@ -18,6 +17,7 @@ export default function TextComponent({
   isDisabled = false,
   register,
   errors,
+  value = undefined,
 }: {
   label: string;
   name: any;
@@ -28,7 +28,8 @@ export default function TextComponent({
   isDisabled?: boolean;
   register: UseFormRegister<FormType>;
   errors: FieldErrors<FieldValues>;
-}):JSX.Element {
+  value?: number | string | readonly string[] | undefined;
+}): JSX.Element {
   const formErrors = errors as FormErrors;
 
   return (
@@ -41,6 +42,7 @@ export default function TextComponent({
         onChange={handleChange}
         disabled={isDisabled}
         className="border p-2 w-48 rounded-md focus:border-blue-500 focus:outline-none"
+        value={value}
       />
       <span className="text-red-500">
         {_.get(formErrors, `${name}.message`) as string}

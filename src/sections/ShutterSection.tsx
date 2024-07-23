@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useCallback } from "react";
 import {
   Control,
   FieldErrors,
+  UseFormGetValues,
   UseFormRegister,
   UseFormSetValue,
   UseFormWatch,
@@ -13,15 +14,16 @@ import { AmountContext } from "@/contexts/AmountContext";
 import ShutterRow from "./ShutterRow";
 import ButtonComponent from "@/components/common/ButtonComponent";
 import { FormType } from "@/types/basicInfoTypes";
+import TextComponent from "@/components/common/TextComponent";
 
-export type ShutterListT =ShutterT[]
+export type ShutterListT = ShutterT[];
 
 export type ShutterT = {
   shutterName: string;
   width: string;
   height: string;
   area: number;
-}
+};
 
 const ShutterSection = ({
   register,
@@ -29,12 +31,14 @@ const ShutterSection = ({
   watch,
   setValue,
   control,
+  getValues,
 }: {
   register: UseFormRegister<FormType>;
   errors: FieldErrors<FormType>;
   watch: UseFormWatch<FormType>;
   setValue: UseFormSetValue<FormType>;
   control: Control<FormType, any>;
+  getValues: UseFormGetValues<FormType>;
 }): JSX.Element => {
   const { finalAmount, setFinalAmount } = useContext(AmountContext) as {
     finalAmount: number;
@@ -51,9 +55,7 @@ const ShutterSection = ({
     name: "shutter",
   });
 
-
-
-  const shutterList:ShutterListT = watch("shutter");
+  const shutterList: ShutterListT = watch("shutter");
 
   useEffect(() => {
     let total: number = 0;
@@ -61,7 +63,9 @@ const ShutterSection = ({
       shutterList.map((shutter: ShutterT) => {
         total += shutter.area;
       });
+    console.log(finalAmount);
     setFinalAmount(total);
+    setValue("finalAmount", total);
   });
   const handleAddShutter = useCallback(() => {
     appendShutter({
@@ -113,7 +117,14 @@ const ShutterSection = ({
             label={"Add Shutter"}
             customClass={" w-36 text-blue-500 border-blue-500"}
           />
-          <p className="mt-3">Total Amount : {finalAmount}</p>
+          <TextComponent
+            register={register}
+            errors={errors}
+            label={"Final Amount"}
+            name={"finalAmount"}
+            type={"text"}
+            isDisabled={true}
+          />
         </div>
       </div>
     </div>

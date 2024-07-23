@@ -36,6 +36,7 @@ export default function ShutterForm(): JSX.Element {
     setValue,
     control,
     reset,
+    getValues
   } = useForm<FormType>({
     resolver: yupResolver(validationSchema),
     context: { finalAmount: finalAmount },
@@ -77,6 +78,7 @@ export default function ShutterForm(): JSX.Element {
           discountType: orderDetails.discountInfo.discountType,
           discount: +orderDetails.discountInfo.discount,
         },
+        finalAmount:orderDetails.finalAmount
       });
     }
   }, [id, orderDetails, reset]);
@@ -88,6 +90,7 @@ export default function ShutterForm(): JSX.Element {
 
   const onSubmit: SubmitHandler<FormData> = useCallback(
     (data: FormData) => {
+      console.log(data , "submitted data");
       const shutterData: ShutterListT = data.shutter.map(
         (shutter: ShutterT): ShutterT => ({
           shutterName: shutter.shutterName,
@@ -108,6 +111,7 @@ export default function ShutterForm(): JSX.Element {
           date: data.basicInfo.date,
         },
         shutter: shutterData,
+        finalAmount:finalAmount
       };
 
       if (id) {
@@ -118,7 +122,7 @@ export default function ShutterForm(): JSX.Element {
 
       route.push("/list");
     },
-    [dispatch, id, route]
+    [dispatch, id, route,finalAmount]
   );
 
   return (
@@ -139,6 +143,7 @@ export default function ShutterForm(): JSX.Element {
             watch={watch}
             setValue={setValue}
             control={control}
+            getValues={getValues}
           />
           <DiscountSection register={register} errors={errors} />
           <ButtonComponent

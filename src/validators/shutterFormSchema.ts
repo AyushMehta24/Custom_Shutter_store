@@ -44,7 +44,7 @@ const validationSchema = yup.object({
         }
       ),
   }),
-  finalAmount: yup.number().required(),
+  totalAmount: yup.string().required(),
 });
 
 export default validationSchema;

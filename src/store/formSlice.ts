@@ -22,7 +22,7 @@ export interface FormData {
   discountInfo: DiscountInfo;
   basicInfo: BasicInfo;
   shutter: Shutter[];
-  finalAmount: number;
+  totalAmount: string;
 }
 
 const initialState: FormData[] = [
@@ -44,7 +44,7 @@ const initialState: FormData[] = [
       discountType: "amount",
       discount: "0",
     },
-    finalAmount: 0,
+    totalAmount: "600",
   },
 ];
 

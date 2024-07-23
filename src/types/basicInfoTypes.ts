@@ -31,7 +31,7 @@ export interface FormType {
     discountType: string;
     discount: number;
   };
-  finalAmount: number;
+  totalAmount: string;
 }
 
 export type NameT =

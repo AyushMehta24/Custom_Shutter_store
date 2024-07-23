@@ -62,8 +62,9 @@ export default function ShutterForm(): JSX.Element {
     if (!id) return undefined;
     return state.form.find((_, index:number) => index === +id);
   });
-
+  
   useEffect(() => {
+    console.log(orderDetails , "details");
     if (orderDetails) {
       reset({
         basicInfo: {
@@ -78,7 +79,7 @@ export default function ShutterForm(): JSX.Element {
           discountType: orderDetails.discountInfo.discountType,
           discount: +orderDetails.discountInfo.discount,
         },
-        finalAmount:orderDetails.finalAmount
+        totalAmount:"999"
       });
     }
   }, [id, orderDetails, reset]);
@@ -111,7 +112,7 @@ export default function ShutterForm(): JSX.Element {
           date: data.basicInfo.date,
         },
         shutter: shutterData,
-        finalAmount:finalAmount
+        totalAmount:finalAmount.toString()
       };
 
       if (id) {

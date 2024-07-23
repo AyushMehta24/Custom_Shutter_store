@@ -63,10 +63,10 @@ const ShutterSection = ({
       shutterList.map((shutter: ShutterT) => {
         total += shutter.area;
       });
-    console.log(finalAmount);
     setFinalAmount(total);
-    setValue("finalAmount", total);
-  });
+    console.log(total , "total");
+    setValue("totalAmount", total.toString());
+  },[finalAmount]);
   const handleAddShutter = useCallback(() => {
     appendShutter({
       shutterName: "",
@@ -121,7 +121,7 @@ const ShutterSection = ({
             register={register}
             errors={errors}
             label={"Final Amount"}
-            name={"finalAmount"}
+            name={"totalAmount"}
             type={"text"}
             isDisabled={true}
           />

@@ -64,7 +64,6 @@ const ShutterSection = ({
         total += shutter.area;
       });
     setFinalAmount(total);
-    console.log(total , "total");
     setValue("totalAmount", total.toString());
   },[finalAmount]);
   const handleAddShutter = useCallback(() => {

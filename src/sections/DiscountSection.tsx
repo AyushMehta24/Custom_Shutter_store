@@ -4,8 +4,8 @@ import RadioComponent from "@/components/common/RadioComponent";
 import TextComponent from "@/components/common/TextComponent";
 import { AmountContext } from "@/contexts/AmountContext";
 import { FormType } from "@/types/basicInfoTypes";
-import React, { useContext, useState, useCallback, useMemo } from "react";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import React, { useContext, useState, useCallback, useMemo, useEffect } from "react";
+import { FieldErrors, UseFormRegister, UseFormWatch } from "react-hook-form";
 
 const Radio_Options: {
   name: string;
@@ -23,10 +23,13 @@ const Radio_Options: {
 const DiscountSection: React.FC<{
   register: UseFormRegister<FormType>;
   errors: FieldErrors<FormType>;
-}> = ({ register, errors }) => {
+  watch: UseFormWatch<FormType>;
+}> = ({ register, errors, watch }) => {
   const { finalAmount } = useContext(AmountContext) as { finalAmount: number };
-  const [discount, setDiscount] = useState(0);
+
+  const [discount, setDiscount] = useState(watch("discountInfo.discount"));
   const [discountType, setDiscountType] = useState("amount");
+  const[discountedAmount , setDiscountedAmount] = useState(0)
 
   const handleDiscountTypeChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,15 +44,24 @@ const DiscountSection: React.FC<{
     },
     []
   );
+  console.log(discount,"...");
+  console.log(finalAmount, "___");
 
-  const payableAmount:number = useMemo(():number => {
+  const payableAmount = () => {
     if (discount > 0 && discount <= finalAmount) {
       return discountType === "amount"
         ? finalAmount - discount
         : finalAmount - (finalAmount * discount) / 100;
     }
     return finalAmount;
-  }, [discount, discountType, finalAmount]);
+  };
+
+  useEffect(()=> {
+    console.log(payableAmount() , "sdhvj");
+    setDiscountedAmount(payableAmount())
+    console.log(discountedAmount,"discountedAmount");
+  }, [finalAmount,discount])
+
 
   return (
     <div className="flex flex-col gap-3">
@@ -70,7 +82,7 @@ const DiscountSection: React.FC<{
           type={"text"}
           handleChange={handleDiscountChange}
         />
-        <p>Payable Amount: {payableAmount}</p>
+        <p>Payable Amount: {discountedAmount}</p>
       </div>
     </div>
   );

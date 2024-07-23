@@ -28,6 +28,43 @@ export default function ShutterForm(): JSX.Element {
     finalAmount: number;
   };
 
+  const params: ReadonlyURLSearchParams | null = useSearchParams();
+
+  const id: string | null | undefined = params?.get("id");
+
+  const orderDetails = useSelector((state: RootState) => {
+    if (!id) return undefined;
+    return state.form.find((_, index: number) => index === +id);
+  });
+
+  const temp = orderDetails
+    ? {
+      basicInfo: {
+        staffName: orderDetails.basicInfo.staffName,
+        customerName: orderDetails.basicInfo.customerName,
+        date: new Date(orderDetails.basicInfo.date)
+          .toISOString()
+          .split("T")[0],
+      },
+      shutter: orderDetails.shutter,
+      discountInfo: {
+        discountType: orderDetails.discountInfo.discountType,
+        discount: +orderDetails.discountInfo.discount,
+      },
+      totalAmount: orderDetails.totalAmount,
+    }
+    : {
+        discountInfo: { discount: 0, discountType: "amount" },
+        shutter: [
+          {
+            shutterName: "",
+            width: "",
+            height: "",
+            area: 0,
+          },
+        ],
+      };
+
   const {
     formState: { errors },
     handleSubmit,
@@ -36,53 +73,33 @@ export default function ShutterForm(): JSX.Element {
     setValue,
     control,
     reset,
-    getValues
+    getValues,
   } = useForm<FormType>({
     resolver: yupResolver(validationSchema),
     context: { finalAmount: finalAmount },
-    defaultValues: {
-      discountInfo: { discount: 0, discountType: "amount" },
-      shutter: [
-        {
-          shutterName: "",
-          width: "",
-          height: "",
-          area: 0,
-        },
-      ],
-    },
+    defaultValues: temp,
   });
 
-  const params: ReadonlyURLSearchParams | null = useSearchParams();
-
-  
-  const id: string | null | undefined = params?.get("id");
-
-  const orderDetails = useSelector((state: RootState) => {
-    if (!id) return undefined;
-    return state.form.find((_, index:number) => index === +id);
-  });
-  
-  useEffect(() => {
-    console.log(orderDetails , "details");
-    if (orderDetails) {
-      reset({
-        basicInfo: {
-          staffName: orderDetails.basicInfo.staffName,
-          customerName: orderDetails.basicInfo.customerName,
-          date: new Date(orderDetails.basicInfo.date)
-            .toISOString()
-            .split("T")[0],
-        },
-        shutter: orderDetails.shutter,
-        discountInfo: {
-          discountType: orderDetails.discountInfo.discountType,
-          discount: +orderDetails.discountInfo.discount,
-        },
-        totalAmount:"999"
-      });
-    }
-  }, [id, orderDetails, reset]);
+  // useEffect(() => {
+  //   console.log(orderDetails, "details");
+  //   if (orderDetails) {
+  //     reset({
+  //       basicInfo: {
+  //         staffName: orderDetails.basicInfo.staffName,
+  //         customerName: orderDetails.basicInfo.customerName,
+  //         date: new Date(orderDetails.basicInfo.date)
+  //           .toISOString()
+  //           .split("T")[0],
+  //       },
+  //       shutter: orderDetails.shutter,
+  //       discountInfo: {
+  //         discountType: orderDetails.discountInfo.discountType,
+  //         discount: +orderDetails.discountInfo.discount,
+  //       },
+  //       totalAmount: orderDetails.totalAmount,
+  //     });
+  //   }
+  // }, [id, orderDetails, reset]);
 
   const [isModal, setIsModal] = useState(false);
 
@@ -91,7 +108,7 @@ export default function ShutterForm(): JSX.Element {
 
   const onSubmit: SubmitHandler<FormData> = useCallback(
     (data: FormData) => {
-      console.log(data , "submitted data");
+      console.log(data, "submitted data");
       const shutterData: ShutterListT = data.shutter.map(
         (shutter: ShutterT): ShutterT => ({
           shutterName: shutter.shutterName,
@@ -112,7 +129,7 @@ export default function ShutterForm(): JSX.Element {
           date: data.basicInfo.date,
         },
         shutter: shutterData,
-        totalAmount:finalAmount.toString()
+        totalAmount: finalAmount.toString(),
       };
 
       if (id) {
@@ -123,7 +140,7 @@ export default function ShutterForm(): JSX.Element {
 
       route.push("/list");
     },
-    [dispatch, id, route,finalAmount]
+    [dispatch, id, route, finalAmount]
   );
 
   return (
@@ -146,7 +163,7 @@ export default function ShutterForm(): JSX.Element {
             control={control}
             getValues={getValues}
           />
-          <DiscountSection register={register} errors={errors} />
+          <DiscountSection register={register} errors={errors} watch={watch} />
           <ButtonComponent
             type="submit"
             label={"Proceed"}

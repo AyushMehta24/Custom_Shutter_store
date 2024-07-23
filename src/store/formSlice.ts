@@ -9,7 +9,7 @@ export interface Shutter {
 
 interface DiscountInfo {
   discountType: string;
-  discount: number | string;
+  discount: number;
 }
 
 interface BasicInfo {
@@ -42,7 +42,7 @@ const initialState: FormData[] = [
     ],
     discountInfo: {
       discountType: "amount",
-      discount: "0",
+      discount: 0,
     },
     totalAmount: "600",
   },

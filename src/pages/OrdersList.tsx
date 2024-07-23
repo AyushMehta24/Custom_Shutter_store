@@ -1,4 +1,4 @@
-// pages/OrderListPage.tsx
+"use client"
 
 import React, { useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";

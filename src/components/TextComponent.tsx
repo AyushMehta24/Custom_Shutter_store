@@ -20,7 +20,7 @@ export default function TextComponent({
   errors,
 }: {
   label: string;
-  name: NameT;
+  name: any;
   type: string;
   handleChange?:
     | ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>

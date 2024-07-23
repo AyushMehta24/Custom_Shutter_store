@@ -7,7 +7,7 @@ import { FormErrors } from "./TextComponent";
 
 
 interface SelectComponentProps {
-  name: NameT;
+  name: any;
   label: string;
   options: string[];
   register: UseFormRegister<FormType>;

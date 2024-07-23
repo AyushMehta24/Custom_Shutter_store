@@ -16,7 +16,7 @@ export default function CustomerInput({
   customClass = "",
 }: {
   label: string;
-  name: AddCustomerT;
+  name: any;
   type: string;
   handleChange?:
     | ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>

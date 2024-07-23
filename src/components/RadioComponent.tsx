@@ -4,7 +4,7 @@ import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import _ from "lodash"
 
 type OptionT = {
-  name: "discountInfo" | "discountInfo.discountType" | "discountInfo.discount";
+  name: any;
   label: string;
   value: string;
 };

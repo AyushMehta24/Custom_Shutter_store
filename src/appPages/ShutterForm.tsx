@@ -53,6 +53,8 @@ export default function ShutterForm(): JSX.Element {
   });
 
   const params: ReadonlyURLSearchParams | null = useSearchParams();
+
+  
   const id: string | null | undefined = params?.get("id");
 
   const orderDetails = useSelector((state: RootState) => {

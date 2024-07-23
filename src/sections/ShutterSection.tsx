@@ -14,12 +14,14 @@ import ShutterRow from "./ShutterRow";
 import ButtonComponent from "@/components/ButtonComponent";
 import { FormType } from "@/types/basicInfoTypes";
 
-type ShutterListT ={
+export type ShutterListT =ShutterT[]
+
+export type ShutterT = {
   shutterName: string;
   width: string;
   height: string;
   area: number;
-}[]
+}
 
 const ShutterSection = ({
   register,
@@ -56,7 +58,7 @@ const ShutterSection = ({
   useEffect(() => {
     let total: number = 0;
     shutterList &&
-      shutterList.map((shutter: any) => {
+      shutterList.map((shutter: ShutterT) => {
         total += shutter.area;
       });
     setFinalAmount(total);

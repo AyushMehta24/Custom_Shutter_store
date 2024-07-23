@@ -9,7 +9,7 @@ export interface Shutter {
 
 interface DiscountInfo {
   discountType: string;
-  discount: string;
+  discount: number | string;
 }
 
 interface BasicInfo {

@@ -32,3 +32,19 @@ export interface FormType {
     discount: number;
   };
 }
+
+export type NameT =
+  | "discountInfo"
+  | "discountInfo.discountType"
+  | "discountInfo.discount"
+  | "basicInfo"
+  | "basicInfo.date"
+  | "basicInfo.staffName"
+  | "basicInfo.customerName"
+  | "basicInfo.date"
+  | "shutter"
+  | `shutter.${number}.area`
+  | `shutter.${number}.width`
+  | `shutter.${number}.height`
+  | `shutter.${number}.shutterName`
+  | `shutter.${number}.area`;  

@@ -1,11 +1,10 @@
 import { FormType } from "@/types/basicInfoTypes";
 import React, { ChangeEventHandler } from "react";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import _ from "lodash"
 
-
 type OptionT = {
-  name: any;
+  name: "discountInfo" | "discountInfo.discountType" | "discountInfo.discount";
   label: string;
   value: string;
 };
@@ -33,7 +32,7 @@ export default function RadioComponent({
     | ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
     | undefined;
   register: UseFormRegister<FormType>;
-  errors: FieldErrors<any>;
+  errors: FieldErrors<FieldValues>;
 }):JSX.Element {
   const formErrors = errors as FormErrors;
 

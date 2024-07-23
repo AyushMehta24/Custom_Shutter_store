@@ -1,6 +1,9 @@
 import { customerT } from "@/store/customerSlice";
+import { FormData } from "@/store/formSlice";
 import React, { ChangeEventHandler } from "react";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldErrors, FieldValue, FieldValues, UseFormRegister } from "react-hook-form";
+
+type AddCustomerT = "customerName" | "customerEmail" | "customerContact";
 
 export default function CustomerInput({
   label,
@@ -13,16 +16,16 @@ export default function CustomerInput({
   customClass = "",
 }: {
   label: string;
-  name: any;
+  name: AddCustomerT;
   type: string;
   handleChange?:
     | ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
     | undefined;
   isDisabled?: boolean;
   register: UseFormRegister<customerT>;
-  errors: FieldErrors<any>;
+  errors: FieldErrors<FieldValues>;
   customClass?: string;
-}):JSX.Element {
+}): JSX.Element {
   return (
     <div className="flex flex-col gap-1">
       <label htmlFor={name}>{label}</label>

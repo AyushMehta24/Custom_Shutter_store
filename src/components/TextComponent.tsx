@@ -1,6 +1,6 @@
-import { FormType } from "@/types/basicInfoTypes";
+import { FormType, NameT } from "@/types/basicInfoTypes";
 import React, { ChangeEventHandler } from "react";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import _ from "lodash";
 
 export type FormErrors = {
@@ -8,6 +8,7 @@ export type FormErrors = {
     message?: string;
   };
 };
+
 
 export default function TextComponent({
   label,
@@ -19,14 +20,14 @@ export default function TextComponent({
   errors,
 }: {
   label: string;
-  name: any;
+  name: NameT;
   type: string;
   handleChange?:
     | ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
     | undefined;
   isDisabled?: boolean;
   register: UseFormRegister<FormType>;
-  errors: FieldErrors<any>;
+  errors: FieldErrors<FieldValues>;
 }):JSX.Element {
   const formErrors = errors as FormErrors;
 

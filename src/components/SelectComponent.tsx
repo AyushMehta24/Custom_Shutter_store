@@ -1,15 +1,17 @@
-import { FormType } from "@/types/basicInfoTypes";
+import { FormType, NameT } from "@/types/basicInfoTypes";
 import React from "react";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import _ from "lodash";
 import { FormErrors } from "./TextComponent";
 
+
+
 interface SelectComponentProps {
-  name: any;
+  name: NameT;
   label: string;
   options: string[];
   register: UseFormRegister<FormType>;
-  errors: FieldErrors<any>;
+  errors: FieldErrors<FieldValues>;
 }
 
 export default function SelectComponent({

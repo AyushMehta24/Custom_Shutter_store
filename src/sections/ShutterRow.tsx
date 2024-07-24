@@ -49,7 +49,7 @@ export default function ShutterRow({
   }, [height, width, setFinalAmount, index]);
 
   useEffect(() => {
-    setValue(`shutter.${index}.area`, area);
+    setValue(`shutter.${index}.area`, Number(area.toFixed(2)));
   }, [area, index, setValue]);
 
   return (
@@ -64,28 +64,30 @@ export default function ShutterRow({
       <TextComponent
         register={register}
         errors={errors}
-        type="text"
+        type="float"
         name={`shutter.${index}.width`}
         label="Width"
         handleChange={(e) => setWidth(+e.target.value)}
+        customClass="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
       />
       <TextComponent
         register={register}
         errors={errors}
-        type="text"
+        type="float"
         name={`shutter.${index}.height`}
         label="Height"
         handleChange={(e) => setHeight(+e.target.value)}
+        customClass="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
       />
-      <div className="flex flex-col gap-1">
-        <label htmlFor={`shutter.${index}.area`}>Area</label>
-        <input
-          {...register(`shutter.${index}.area`)}
-          disabled={true}
-          value={area}
-          className="border py-2 px-2 w-48 rounded-md focus:border-blue-500 focus:outline-none"
-        />
-      </div>
+      <TextComponent
+        register={register}
+        errors={errors}
+        type="float"
+        name={`shutter.${index}.area`}
+        label="Area"
+        isDisabled={true}
+        customClass="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+      />
       <ButtonComponent
         handleClick={() => handleRemoveShutter(index)}
         label={"Remove"}

@@ -18,6 +18,7 @@ export default function TextComponent({
   register,
   errors,
   value = undefined,
+  customClass = ""
 }: {
   label: string;
   name: any;
@@ -29,6 +30,7 @@ export default function TextComponent({
   register: UseFormRegister<FormType>;
   errors: FieldErrors<FieldValues>;
   value?: number | string | readonly string[] | undefined;
+  customClass? : string
 }): JSX.Element {
   const formErrors = errors as FormErrors;
 
@@ -41,7 +43,7 @@ export default function TextComponent({
         {...register(name)}
         onChange={handleChange}
         disabled={isDisabled}
-        className="border p-2 w-48 rounded-md focus:border-blue-500 focus:outline-none"
+        className={`border p-2 w-48 rounded-md focus:border-blue-500 focus:outline-none ${customClass}`}
         value={value}
       />
       <span className="text-red-500">

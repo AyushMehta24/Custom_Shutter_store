@@ -37,6 +37,8 @@ export default function ShutterForm(): JSX.Element {
     return state.form.find((_, index: number) => index === +id);
   });
 
+  console.log(orderDetails, "orderDetails");
+
   const temp = orderDetails
     ? {
       basicInfo: {
@@ -114,7 +116,7 @@ export default function ShutterForm(): JSX.Element {
           shutterName: shutter.shutterName,
           width: shutter.width,
           height: shutter.height,
-          area: Number(shutter.width) * Number(shutter.height),
+          area: Number((Number(shutter.width) * Number(shutter.height)).toFixed(2)),
         })
       );
 

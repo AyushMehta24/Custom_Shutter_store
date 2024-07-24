@@ -37,8 +37,6 @@ export default function ShutterForm(): JSX.Element {
     return state.form.find((_, index: number) => index === +id);
   });
 
-  console.log(orderDetails, "orderDetails");
-
   const temp = orderDetails
     ? {
       basicInfo: {
@@ -110,7 +108,6 @@ export default function ShutterForm(): JSX.Element {
 
   const onSubmit: SubmitHandler<FormData> = useCallback(
     (data: FormData) => {
-      console.log(data, "submitted data");
       const shutterData: ShutterListT = data.shutter.map(
         (shutter: ShutterT): ShutterT => ({
           shutterName: shutter.shutterName,

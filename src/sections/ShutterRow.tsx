@@ -1,10 +1,5 @@
 "use client";
 
-import ButtonComponent from "@/components/common/ButtonComponent";
-import SelectComponent from "@/components/common/SelectComponent";
-import TextComponent from "@/components/common/TextComponent";
-import { AmountContext } from "@/contexts/AmountContext";
-import { FormType } from "@/types/basicInfoTypes";
 import React, { useContext, useEffect, useState } from "react";
 import {
   FieldErrors,
@@ -12,18 +7,27 @@ import {
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
+import { AmountContext } from "@/contexts/AmountContext";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import ButtonComponent from "@/components/common/ButtonComponent";
+import SelectComponent from "@/components/common/SelectComponent";
+import TextComponent from "@/components/common/TextComponent";
+import { FormType } from "@/types/basicInfoTypes";
 
 const ShutterNames: string[] = ["A", "B", "C"];
 
 export default function ShutterRow({
+  id,
   index,
   handleRemoveShutter,
   handleCloneShutter,
-  register,
+  register, 
   errors,
   watch,
   setValue,
 }: {
+  id: string;
   index: number;
   handleRemoveShutter: (index: number) => void;
   handleCloneShutter: (index: number) => void;
@@ -52,8 +56,29 @@ export default function ShutterRow({
     setValue(`shutter.${index}.area`, Number(area.toFixed(2)));
   }, [area, index, setValue]);
 
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
   return (
-    <div key={index} className="flex gap-3  items-end">
+    <div
+      key={id}
+      className="flex gap-3 items-end"
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+    >
+      <span
+        {...listeners}
+        className="cursor-move p-2 bg-gray-300 rounded mb-1"
+        aria-label="Drag handle"
+      >
+        &#x2637;
+      </span>
       <SelectComponent
         register={register}
         errors={errors}
@@ -64,22 +89,20 @@ export default function ShutterRow({
       <TextComponent
         register={register}
         errors={errors}
-        type="float"
+        type="text"
         name={`shutter.${index}.width`}
         label="Width"
         handleChange={(e) => setWidth(+e.target.value)}
-        customClass="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
       />
       <TextComponent
         register={register}
         errors={errors}
-        type="float"
+        type="text"
         name={`shutter.${index}.height`}
         label="Height"
         handleChange={(e) => setHeight(+e.target.value)}
-        customClass="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
       />
-      <TextComponent
+       <TextComponent
         register={register}
         errors={errors}
         type="float"

@@ -44,8 +44,6 @@ const DiscountSection: React.FC<{
     },
     []
   );
-  console.log(discount,"...");
-  console.log(finalAmount, "___");
 
   const payableAmount = () => {
     if (discount > 0 && discount <= finalAmount) {
@@ -57,9 +55,7 @@ const DiscountSection: React.FC<{
   };
 
   useEffect(()=> {
-    console.log(payableAmount() , "sdhvj");
     setDiscountedAmount(payableAmount())
-    console.log(discountedAmount,"discountedAmount");
   }, [finalAmount,discount])
 
 

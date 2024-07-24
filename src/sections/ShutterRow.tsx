@@ -14,6 +14,8 @@ import ButtonComponent from "@/components/common/ButtonComponent";
 import SelectComponent from "@/components/common/SelectComponent";
 import TextComponent from "@/components/common/TextComponent";
 import { FormType } from "@/types/basicInfoTypes";
+import Image from "next/image";
+import DragImg from "../../public/image.png";
 
 const ShutterNames: string[] = ["A", "B", "C"];
 
@@ -22,7 +24,7 @@ export default function ShutterRow({
   index,
   handleRemoveShutter,
   handleCloneShutter,
-  register, 
+  register,
   errors,
   watch,
   setValue,
@@ -74,10 +76,17 @@ export default function ShutterRow({
     >
       <span
         {...listeners}
-        className="cursor-move p-2 bg-gray-300 rounded mb-1"
+        className="cursor-move p-2 rounded mb-1 "
         aria-label="Drag handle"
       >
-        &#x2637;
+        {/* &#x2637; */}
+        <Image
+          src={DragImg}
+          width={25}
+          height={30}
+          alt="Picture of the author"
+          className="opacity-20"
+        />
       </span>
       <SelectComponent
         register={register}
@@ -102,7 +111,7 @@ export default function ShutterRow({
         label="Height"
         handleChange={(e) => setHeight(+e.target.value)}
       />
-       <TextComponent
+      <TextComponent
         register={register}
         errors={errors}
         type="float"

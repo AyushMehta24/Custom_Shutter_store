@@ -50,7 +50,7 @@ export default function ShutterRow({
   useEffect(() => {
     setArea(width * height);
     setFinalAmount(
-      (prev: number): number => prev + Number(width) * Number(height)
+      (prev: number): number => +(prev + Number(width) * Number(height)).toFixed(2)
     );
   }, [height, width, setFinalAmount, index]);
 

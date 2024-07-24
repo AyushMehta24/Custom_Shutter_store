@@ -3,6 +3,7 @@
 import React, { useContext, useEffect, useCallback } from "react";
 import {
   Control,
+  FieldArrayWithId,
   FieldErrors,
   UseFormGetValues,
   UseFormRegister,
@@ -21,16 +22,13 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-  KeyboardSensor,
+  SensorOptions,
+  SensorDescriptor,
 } from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  useSortable,
-} from "@dnd-kit/sortable";
+import { SortableContext } from "@dnd-kit/sortable";
 import { verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+
+type DragFieldT = FieldArrayWithId<FormType, "shutter", "id">;
 
 export type ShutterListT = ShutterT[];
 
@@ -112,22 +110,25 @@ const ShutterSection = ({
     [insertShutter, watch]
   );
 
-  const sensors = useSensors(
+  const sensors: SensorDescriptor<SensorOptions>[] = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
         distance: 5,
       },
-    }),
+    })
   );
 
   const handleDragEnd = useCallback(
     (event: any) => {
       const { active, over } = event;
       if (active.id !== over.id) {
-        const oldIndex = shutterFields.findIndex(
-          (item) => item.id === active.id
+        const oldIndex: number = shutterFields.findIndex(
+          (item: DragFieldT): boolean => item.id === active.id
         );
-        const newIndex = shutterFields.findIndex((item) => item.id === over.id);
+        (item: DragFieldT): boolean => item.id === active.id;
+        const newIndex: number = shutterFields.findIndex(
+          (item: DragFieldT): boolean => item.id === over.id
+        );
         moveShutter(oldIndex, newIndex);
       }
     },
@@ -141,13 +142,13 @@ const ShutterSection = ({
       onDragEnd={handleDragEnd}
     >
       <SortableContext
-        items={shutterFields.map((field) => field.id)}
+        items={shutterFields.map((field: DragFieldT):string => field.id)}
         strategy={verticalListSortingStrategy}
       >
         <div className="flex flex-col gap-3">
           <h2 className="text-xl font-semibold">Shutter Information</h2>
           <div className="flex flex-col gap-3">
-            {shutterFields.map((field, index) => (
+            {shutterFields.map((field: DragFieldT, index: number) => (
               <ShutterRow
                 key={field.id}
                 id={field.id}

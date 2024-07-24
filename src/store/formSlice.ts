@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
 
 export interface Shutter {
   shutterName: string;
@@ -47,6 +48,7 @@ const initialState: FormData[] = [
     totalAmount: "600",
   },
 ];
+
 
 const formSlice = createSlice({
   name: "form",
